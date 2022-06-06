@@ -6,3 +6,9 @@
 1. Start   
 2. 원하는 알람단위 체크 ( 도중에 체크/해제 가능 )
 3. 체크된 단위마다 10초간 알람 ( Music : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs )
+
+## build
+1. ANACONDA.NAVIGATOR CMD.exe Prompt 0.1.1
+2. Python 3.9.12 (main, Apr  4 2022, 05:22:27) [MSC v.1916 64 bit (AMD64)]
+3. pyinstaller 5.1 ( pip install pyinstaller - Require PATH set & Kernel Reboot )
+4. Build : pyinstaller -w -F --icon="resources/potion.ico" --add-data="resources/*;." wealth_acquisition_timer.py
