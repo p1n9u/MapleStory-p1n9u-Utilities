@@ -15,3 +15,5 @@
 3. pyinstaller 5.1 ( pip install pyinstaller - Require PATH set & Kernel Reboot )
 4. Build : pyinstaller -w -F --icon="resources/potion.ico" --add-data="resources/*;." wealth_acquisition_timer.py   
 [ if you debugging without build, need to modify sound and ico path in source code resources/~ ] 
+5. EXE file is in dist
+6. you can clear build, dist, *.spec file
