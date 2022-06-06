@@ -12,4 +12,4 @@
 2. Python 3.9.12 (main, Apr  4 2022, 05:22:27) [MSC v.1916 64 bit (AMD64)]
 3. pyinstaller 5.1 ( pip install pyinstaller - Require PATH set & Kernel Reboot )
 4. Build : pyinstaller -w -F --icon="resources/potion.ico" --add-data="resources/*;." wealth_acquisition_timer.py   
-[ if you debugging with out build, need to modify sound and ico path in source code resources/~ ] 
+[ if you debugging without build, need to modify sound and ico path in source code resources/~ ] 
