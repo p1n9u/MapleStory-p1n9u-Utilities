@@ -1,5 +1,7 @@
 ## MapleStory Wealth Acquisition Timer - 메이플 재획 타이머
 
+대충짠거 치고는 생각보다 잘 작동함 ww   
+
 ### Interface
 ![img](./interface.png)
 
