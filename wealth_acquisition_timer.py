@@ -39,38 +39,58 @@ def reset():
     global running
     running = False
     time_txt.config(text="Press Start")
-    wcnt_txt.config(text="연속재획시 [2시간] 을 체크해야 카운팅이 됩니다.")        
+    wcnt_txt.config(text="연속재획시 [2시간] 을 체크해야 카운팅이 됩니다.")
+    clist_txt.config(text="[체크리스트] : 링크, 유니온배치, 정펜, 혈반, 농장, 쓸심, 하이퍼")
 
 # Timer
 def waTimer():
     global st, val0, val1, val2, val3, val4, val5, val6, cnt
     if (running):
         et = int(time.time() - st) # elapsed time
+        str_alarm = "[알림] : "
+        str_alarm_chk = False
 
         # each variable match to checkbox
-        if val0.get(): #2h
-            if (et%7200 == 0) and (et!=0):
-                winsound.PlaySound(resource_path("lithharbor.wav"), winsound.SND_ASYNC)
-                cnt += 1
-        if val1.get(): #1h
-            if (et%3600 == 0) and (et!=0):
-                winsound.PlaySound(resource_path("orbis.wav"), winsound.SND_ASYNC)
-        if val2.get(): #30m
-            if (et%1800 == 0) and (et!=0):
-                winsound.PlaySound(resource_path("starbubble.wav"), winsound.SND_ASYNC)
-        if val3.get(): #20m
-            if (et%1200 == 0) and (et!=0):
-                winsound.PlaySound(resource_path("ludibrium.wav"), winsound.SND_ASYNC)
-        if val4.get(): #15m
-            if (et%900 == 0) and (et!=0):
-               winsound.PlaySound(resource_path("spotlight.wav"), winsound.SND_ASYNC)
-        if val5.get(): #10m
-            if (et%600 == 0) and (et!=0):
-                winsound.PlaySound(resource_path("ellinia.wav"), winsound.SND_ASYNC)
-        if val6.get(): #100s
+        if val6.get():
             if (et%100 == 0) and (et!=0):
                 winsound.PlaySound(resource_path("henesys.wav"), winsound.SND_ASYNC)
-
+                str_alarm += "100초 "
+                str_alarm_chk = True
+        if val5.get():
+            if (et%600 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("ellinia.wav"), winsound.SND_ASYNC)
+                str_alarm += "10분 "
+                str_alarm_chk = True
+        if val4.get():
+            if (et%900 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("spotlight.wav"), winsound.SND_ASYNC)
+                str_alarm += "15분 "
+                str_alarm_chk = True
+        if val3.get():
+            if (et%1200 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("ludibrium.wav"), winsound.SND_ASYNC)
+                str_alarm += "20분 "
+                str_alarm_chk = True
+        if val2.get():
+            if (et%1800 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("starbubble.wav"), winsound.SND_ASYNC)
+                str_alarm += "30분 "
+                str_alarm_chk = True
+        if val1.get():
+            if (et%3600 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("orbis.wav"), winsound.SND_ASYNC)
+                str_alarm += "1시간 "
+                str_alarm_chk = True
+        if val0.get():
+            if (et%7200 == 0) and (et!=0):
+                winsound.PlaySound(resource_path("lithharbor.wav"), winsound.SND_ASYNC)
+                str_alarm += "2시간 "
+                str_alarm_chk = True
+                cnt += 1
+        
+        if (str_alarm_chk == True):
+            clist_txt.config(text=str_alarm)
+        
         # et variable : second -> conver to day, hour, minute, second
         m, s = divmod(et, 60)
         h, m = divmod(m, 60)
@@ -99,7 +119,7 @@ def waTimer():
 # Settings and Init
 root = Tk()
 root.title("니가선택한재획이다악으로깡으로넷플봐라")
-root.geometry("480x540+220+220")
+root.geometry("480x570+220+220")
 root.resizable(False, False)
 running = False
 st = time.time()
@@ -117,8 +137,10 @@ glbl0 = Label(root, text="제작자 : 서버-유니온, 길드-풍아, 닉네임
 glbl0.pack()
 glbl1 = Label(root, text="이 프로그램은 상업용이 아닙니다. 버그픽스안합니다.")
 glbl1.pack()
-glbl2 = Label(root, text="< 메소회수는 5초, 이외 10초 동안 알림 >")
+glbl2 = Label(root, text="< 1. 메소회수는 5초, 이외 10초간 알림 >")
 glbl2.pack()
+glbl3 = Label(root, text="< 2. 긴 시간 알림음 우선, 체크리스트에 모든 시간 알림 표시 >")
+glbl3.pack()
 
 # second line
 line_lbl0 = Label(root)
