@@ -9,7 +9,8 @@
 1. 시작 / Start
 2. 원하는 알람단위 체크 ( 도중에 체크/해제 가능 ) / Check the box you want to alarm
 3. 체크된 단위마다 10초간 알람 / Starting alarm on checked time for 10s   
-[ Music : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs ]
+[ Angelic Buster Music : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]
+[ Town BGM : https://maplestory.nexon.com/Media/Music ]
 
 ### Build
 1. ANACONDA.NAVIGATOR CMD.exe Prompt 0.1.1
