@@ -2,8 +2,11 @@
 
 대충짠거 치고는 생각보다 잘 작동함 ww   
 
-### nitial Interface
-![img](./interface.png)
+### Initial Interface
+![img](./i_interface.png)
+
+### Running Interface
+![img](./r_interface.png)
 
 ### Usage
 1. 시작 / Start
