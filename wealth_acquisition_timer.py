@@ -133,7 +133,7 @@ line4 = Label(line_lbl4, text="-------------------------------------------------
 line4.pack(side="left")
 
 # introduction
-glbl0 = Label(root, text="제작자 : 서버-유니온, 길드-풍아, 닉네임-p1n9u, 어뜨케 직업이 12움?")
+glbl0 = Label(root, text="개발자 : 서버-유니온, 길드-풍아, 닉네임-p1n9u, 어뜨케 직업이 12움?")
 glbl0.pack()
 glbl1 = Label(root, text="이 프로그램은 상업용이 아닙니다. 버그픽스안합니다.")
 glbl1.pack()
