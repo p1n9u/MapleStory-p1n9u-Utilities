@@ -2,7 +2,7 @@
 
 대충짠거 치고는 생각보다 잘 작동함 ww   
 
-### Interface
+### nitial Interface
 ![img](./interface.png)
 
 ### Usage
