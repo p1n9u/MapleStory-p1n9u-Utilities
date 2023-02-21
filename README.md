@@ -1,5 +1,5 @@
-## 메이플 재획 타이머
-# MapleStory Wealth Acquisition Timer
+# 메이플 재획 타이머
+## MapleStory Wealth Acquisition Timer
 
 대충짠거 치고는 생각보다 잘 작동함 ww   
 2022 06 10 금 개발 완료/종료   
