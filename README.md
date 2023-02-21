@@ -1,5 +1,7 @@
 # 메이플 재획 타이머
 ## MapleStory Wealth Acquisition Timer
+Download EXE file link : https://cdn.discordapp.com/attachments/736229565873258526/1004354790140153919/timer.zip   
+
 
 대충짠거 치고는 생각보다 잘 작동함 ww   
 2022 06 10 금 개발 완료/종료   
