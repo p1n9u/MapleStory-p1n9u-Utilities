@@ -5,8 +5,11 @@ New Version Release : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%
 
 ![img](./newversion.png)
 
-Repo will be updated soon, 2023-02-27   
+Repo will be updated soon with manual, 2023-02-27   
 
+   
+   
+   
 Download EXE file link : https://cdn.discordapp.com/attachments/736229565873258526/1004354790140153919/timer.zip   
 
 
