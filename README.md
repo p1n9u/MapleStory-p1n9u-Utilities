@@ -1,5 +1,12 @@
 # 메이플스토리 재획 타이머
 ## MapleStory Wealth Acquisition Timer
+
+New Version Release : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0   
+
+![img](./newversion.png)
+
+Repo will be updated soon, 2023-02-27   
+
 Download EXE file link : https://cdn.discordapp.com/attachments/736229565873258526/1004354790140153919/timer.zip   
 
 
