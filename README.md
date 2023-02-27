@@ -1,39 +1,48 @@
 # 메이플스토리 재획 타이머
+
 ## MapleStory Wealth Acquisition Timer
 
-New Version Release : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0   
+New Version Release : 2023-02-24
 
-![img](./newversion.png)
-
-Repo will be updated soon with manual, 2023-02-27   
-
-   
-   
-   
-Download EXE file link : https://cdn.discordapp.com/attachments/736229565873258526/1004354790140153919/timer.zip   
-
-
-대충짠거 치고는 생각보다 잘 작동함 ww   
-2022 06 10 금 개발 완료/종료   
+Download EXE file link : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0
 
 ### Initial Interface
-![img](./i_interface.png)
+
+![img](interface_img/i_interface.png)
 
 ### Running Interface
-![img](./r_interface.png)
+
+![img](interface_img/r_interface.png)
 
 ### Usage
-1. 시작 / Start
-2. 원하는 알람단위 체크 ( 도중에 체크/해제 가능 ) / Check the box you want to alarm
-3. 체크된 단위마다 10초간 알람 / Starting alarm on checked time for 10s   
-[ Angelic Buster Lyric : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]   
-[ Town BGM : https://maplestory.nexon.com/Media/Music ]
+
+1. Download EXE file from Link
+2. Extract Zip file
+    - exe file
+    - google fonts
+3. install google fonts ( Recommanded )
+    - Roboto : https://fonts.google.com/specimen/Roboto
+    - Noto Sans Korean : https://fonts.google.com/noto/specimen/Noto+Sans+KR
+
+### Dev
+
+1. PyCharm Community Edition 2022.3.2
+2. Python 3.11.0 (main, Oct 24 2022, 18:26:48) [MSC v.1933 64 bit (AMD64)] on win32
+3. pyinstaller 5.8.0
+4. PyQt5 5.15.9 ( include designer for UI )
 
 ### Build
-1. ANACONDA.NAVIGATOR CMD.exe Prompt 0.1.1
-2. Python 3.9.12 (main, Apr  4 2022, 05:22:27) [MSC v.1916 64 bit (AMD64)]
-3. pyinstaller 5.1 ( pip install pyinstaller - Require PATH set & Kernel Reboot )
-4. Build : pyinstaller -w -F --icon="resources/potion.ico" --add-data="resources/*;." wealth_acquisition_timer.py   
-[ if you debugging without build, need to modify sound and ico path in source code resources/~ or copy them same directory (.py file) ] 
-5. EXE file is in dist
-6. you can clear build, dist, *.spec file
+
+1. Build : pyinstaller --clean --onefile --noconsole --icon="resources/icon/potion.ico" --add-data="resources/\*;." -n RiceHarvester main.py
+
+    - Use Window PowerShell ( Vanilla is better than Anaconda for file size )
+
+2. modify RiceHarvester.spec file
+
+    datas=[('resources/wav/*', './resources/wav'),
+    ('resources/ui/*', './resources/ui'),
+    ('resources/icon/*', './resources/icon'),
+    ('resources/img/*', './resources/img')
+    ],
+
+3. pyinstall .\RiceHarvester.spec
