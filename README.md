@@ -1,9 +1,9 @@
 # 메이플스토리 재획 타이머
 
 ## MapleStory Wealth Acquisition Timer
-- RiceHarvester : 쌀 수확기 
 
 New Version Release : 2023-02-24
+- RiceHarvester : 쌀 수확기, 니가선택한쌀농사버악깡버
 
 Download EXE file link : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0  
 1. 다운받고 압축풀고 사용, 글자 밀림 현상 수정을 원하면 폰트 설치
