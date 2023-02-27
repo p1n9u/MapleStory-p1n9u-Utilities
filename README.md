@@ -1,6 +1,7 @@
 # 메이플스토리 재획 타이머
 
 ## MapleStory Wealth Acquisition Timer
+- RiceHarvester : 쌀 수확기 
 
 New Version Release : 2023-02-24
 
