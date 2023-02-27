@@ -4,9 +4,9 @@
 
 New Version Release : 2023-02-24
 
-Download EXE file link : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0
-[ 다운받고 압축풀고 사용. 글자 밀림 현상 수정을 원하면 폰트 설치. ]
-[ 테스트 인원 : 3명 (굉구, 냉동참미, 사시) 정상 작동 ]
+Download EXE file link : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0  
+[ 다운받고 압축풀고 사용. 글자 밀림 현상 수정을 원하면 폰트 설치. ]  
+[ 테스트 인원 : 3명 (굉구, 냉동참미, 사시) 정상 작동 ]  
 [ 1분-설치형 루시드 소울도 있긴함.. 추가하기 귀찮 ]
 
 ### Initial Interface
