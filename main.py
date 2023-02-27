@@ -34,9 +34,9 @@ class WindowClass(QMainWindow, form_class) :
         self.lb_dev_link.setText('<a href="https://github.com/p1n9u">Link</a>')
         self.lb_dev_link.setOpenExternalLinks(True)
 
-
+        # alarm wav files
         self.wavlist = [
-            "p",
+            "dump",
             resource_path("resources/wav/title.wav"),
             resource_path("resources/wav/shop.wav"),
             resource_path("resources/wav/henesys.wav"),
@@ -73,14 +73,17 @@ class WindowClass(QMainWindow, form_class) :
 
     # event functions
 
+    ## Livetime Update
     def display_livetime(self):
         datetime = QDateTime.currentDateTime()
         self.lb_livetime_value.setText(datetime.toString('hh:mm:ss - yy년 MM월 dd일'))
 
+    ## start button click
     def clicked_startbtn(self):
         self.rhtime_timer.start()
         self.lb_alarm_info.setText("Start, be Munchi!")
 
+    ## reset button click
     def clicked_resetbtn(self):
         self.rhtime_timer.stop()
         self.rh_cnt = 0
@@ -94,6 +97,7 @@ class WindowClass(QMainWindow, form_class) :
         self.pb_rhstatus.setValue(0)
         self.lb_alarm_info.setText("Reset done, harvest again")
 
+    ## rice harvest
     def activate_rh(self):
         alarm_flag = 0
         alarm_str = ""
