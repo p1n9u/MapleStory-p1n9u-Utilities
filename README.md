@@ -1,4 +1,4 @@
-# 메이플스토리 재획 타이머
+# 메이플 스토리 재획 타이머
 
 ## MapleStory Wealth Acquisition Timer
 
