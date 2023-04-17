@@ -10,6 +10,11 @@ New Version Release : 2023-02-24
     3. 1분 : 설치형 루시드 소울도 있긴함.. 추가하기 귀찮
     4. 버그, 오류수정 하고 싶을 때함함
 
+```
+# Upcoming Update Note : edited 2023-04-17
+"폴로프리토 타이머 추가할것것"
+```
+
 ### Initial Interface
 
 ![img](interface_img/i_interface.png)
