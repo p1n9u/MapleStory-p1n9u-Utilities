@@ -15,7 +15,7 @@ New Version Release : 2023-06-22
 
 ### Version
 
-- v2.0.1-230622 : Latest
+- v2.0.1-230622 : Latest(재획타이머_230622-1)
     - 시간밀림현상 수정
 - v2.0.0-230622
     - update feature
