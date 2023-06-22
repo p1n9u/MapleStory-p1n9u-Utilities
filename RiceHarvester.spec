@@ -8,11 +8,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('resources/wav/*', './resources/wav'),
-           ('resources/ui/*', './resources/ui'),
-           ('resources/icon/*', './resources/icon'),
-           ('resources/img/*', './resources/img')
-          ],
+    datas=[('resources/wav/', './resources/wav'), ('resources/ui/', './resources/ui'), ('resources/icon/', './resources/icon'), ('resources/img/', './resources/img') ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

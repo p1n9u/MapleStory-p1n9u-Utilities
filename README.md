@@ -1,20 +1,13 @@
-# 메이플 스토리 재획 타이머
+# 메이플스토리 재획 타이머
 
 ## MapleStory Wealth Acquisition Timer
 
-New Version Release : 2023-02-24
-- RiceHarvester : 쌀 수확기, 니가선택한쌀농사버악깡버
-- Download EXE file link : https://www.dropbox.com/s/7xij2sq9wdvnvpf/%EC%9E%AC%ED%9A%8D%ED%83%80%EC%9D%B4%EB%A8%B8.zip?dl=0  
-    1. 다운받고 압축풀고 사용, 글자 밀림 현상 수정을 원하면 폰트 설치
-    2. 테스트 인원 : 4명 (p1n9u, 냉동참치Me, 븝헛, 신다희) - 정상 작동
-    3. 버그, 오류수정 하고 싶을 때함함
+New Version Release : 2023-06-22
 
-```
-# Upcoming Update Note : edited 2023-04-18
-"폴로프리토 타이머 추가할것것"
-"사이즈 고정"
-"설치형 소울 추가"
-```
+Download EXE file link : https://www.dropbox.com/scl/fi/m5a2o96nzlxa6zjddodgy/_230622.zip?dl=0&rlkey=dm4tbqlbrz6t8qp0nhdwmdeso  
+[ 다운받고 압축풀고 사용. 글자 밀림 현상 수정을 원하면 폰트 설치. ]  
+[ 테스트 인원 : 3명 (굉구, 냉동참미, 사시) 정상 작동 ]  
+[ 1분-설치형 루시드 소울도 있긴함.. 추가하기 귀찮 ]
 
 ### Initial Interface
 
@@ -56,3 +49,9 @@ New Version Release : 2023-02-24
     ],
 
 3. pyinstall .\RiceHarvester.spec
+
+### Music Reference
+
+1. [ Angelic Buster Lyric : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]
+2. [ Town BGM : https://maplestory.nexon.com/Media/Music ]
+3. [ https://downloads.khinsider.com/game-soundtracks/album/maplestory-music ]
