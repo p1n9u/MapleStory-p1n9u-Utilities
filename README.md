@@ -6,7 +6,7 @@ New Version Release : 2023-06-22
 
 ### Download
 
-- [Dropbox](https://www.dropbox.com/scl/fi/m5a2o96nzlxa6zjddodgy/_230622.zip?dl=0&rlkey=dm4tbqlbrz6t8qp0nhdwmdeso)  
+- [Dropbox](https://www.dropbox.com/scl/fi/bb3rs6hdtqb6fw2lktjjg/_230622-1.zip?dl=0&rlkey=lbqsfodec39kljhj6ku04dqr3)  
     - exe file  
     - google fonts  
         - [Roboto](https://fonts.google.com/specimen/Roboto)  
@@ -15,7 +15,9 @@ New Version Release : 2023-06-22
 
 ### Version
 
-- v2.0.0-230622 : Latest
+- v2.0.1-230622 : Latest
+    - 시간밀림현상 수정
+- v2.0.0-230622
     - update feature
         1. 메인 스킬 UI 분리
         2. 경뿌 타이머 추가

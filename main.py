@@ -146,31 +146,31 @@ class WindowClass(QMainWindow, form_class) :
         rht_string = "{0}:{1:02}:{2:02}".format(self.hh, self.mm, self.ss)
         self.lb_rhtime_value.setText(rht_string)
 
-        if ( self.cb_0025.isChecked() and self.total%25==0 ):
+        if ( self.cb_0025.isChecked() and ((self.total+5)%30) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0035.isChecked() and self.total%35==0 ):
+        if ( self.cb_0035.isChecked() and ((self.total+5)%40) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0045.isChecked() and self.total%45==0 ):
+        if ( self.cb_0045.isChecked() and ((self.total+5)%50) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0145.isChecked() and self.total%145==0 ):
+        if ( self.cb_0145.isChecked() and ((self.total+5)%150) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0195.isChecked() and self.total%195==0 ):
+        if ( self.cb_0195.isChecked() and ((self.total+5)%200) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0295.isChecked() and self.total%295==0 ):
+        if ( self.cb_0295.isChecked() and ((self.total+5)%300) == 0 ):
             alarm_flag = 1
             alarm_str += "스킬 "
-        if ( self.cb_0055.isChecked() and self.total%55==0 ):
+        if ( self.cb_0055.isChecked() and ((self.total+5)%60) == 0 ):
             alarm_flag = 2
             alarm_str += "1분 "
-        if ( self.cb_0115.isChecked() and self.total%115==0 ):
+        if ( self.cb_0115.isChecked() and ((self.total+5)%120) == 0 ):
             alarm_flag = 3
             alarm_str += "2분 "
-        if ( self.cb_0175.isChecked() and self.total%175==0 ):
+        if ( self.cb_0175.isChecked() and ((self.total+5)%180) ==0 ):
             alarm_flag = 4
             alarm_str += "3분 "
         if ( self.cb_0100.isChecked() and self.total%100==0 ):
