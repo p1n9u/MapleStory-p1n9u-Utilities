@@ -6,7 +6,7 @@ New Version Release : 2023-06-22
 
 ### Download
 
-- [Dropbox](https://www.dropbox.com/scl/fi/bb3rs6hdtqb6fw2lktjjg/_230622-1.zip?dl=0&rlkey=lbqsfodec39kljhj6ku04dqr3)  
+- [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
     - exe file  
     - google fonts  
         - [Roboto](https://fonts.google.com/specimen/Roboto)  
@@ -68,7 +68,7 @@ New Version Release : 2023-06-22
     ('resources/img/*', './resources/img')
     ],
 
-3. pyinstall .\RiceHarvester.spec
+3. pyinstaller .\RiceHarvester.spec
 
 ### Music Reference
 

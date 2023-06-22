@@ -148,22 +148,22 @@ class WindowClass(QMainWindow, form_class) :
 
         if ( self.cb_0025.isChecked() and ((self.total+5)%30) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "30쿨 "
         if ( self.cb_0035.isChecked() and ((self.total+5)%40) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "40쿨 "
         if ( self.cb_0045.isChecked() and ((self.total+5)%50) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "50쿨 "
         if ( self.cb_0145.isChecked() and ((self.total+5)%150) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "150쿨 "
         if ( self.cb_0195.isChecked() and ((self.total+5)%200) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "200쿨 "
         if ( self.cb_0295.isChecked() and ((self.total+5)%300) == 0 ):
             alarm_flag = 1
-            alarm_str += "스킬 "
+            alarm_str += "300쿨 "
         if ( self.cb_0055.isChecked() and ((self.total+5)%60) == 0 ):
             alarm_flag = 2
             alarm_str += "1분 "
