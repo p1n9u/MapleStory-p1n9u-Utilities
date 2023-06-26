@@ -15,7 +15,7 @@ New Version Release : 2023-06-22
 
 ### Version
 
-- v2.0.1-230622 : Latest, ZIP FILE(재획타이머_230622-2)
+- v2.0.2-230622 : Latest, ZIP FILE(재획타이머_230622-2)
     - 농기구 멘트 가독성 패치
 - v2.0.1-230622
     - 시간밀림현상 수정
@@ -60,7 +60,7 @@ New Version Release : 2023-06-22
 
 1. Build : pyinstaller --clean --onefile --noconsole --icon="resources/icon/potion.ico" --add-data="resources/\*;." -n RiceHarvester main.py
 
-    - **Use Window PowerShell**
+    - **Use Windows PowerShell**
 
 2. modify RiceHarvester.spec file
 
