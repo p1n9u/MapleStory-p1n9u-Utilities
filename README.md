@@ -6,6 +6,8 @@ New Version Release : 2023-06-22
 
 ### Download
 
+- [Blog]https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/
+- [Github Repo](https://github.com/p1n9u/MapleStory-Wealth-Acquisition-Timer)
 - [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
     - exe file  
     - google fonts  
@@ -33,28 +35,37 @@ New Version Release : 2023-06-22
 - Developer
     - [p1n9u, Union, Illium](https://maple.gg/u/p1n9u)
 - Special Thx
-    - [냉동참미, Union, Mercedes](https://maple.gg/u/%EB%83%89%EB%8F%99%EC%B0%B8%EB%AF%B8)
+    - [참이, Union, Mercedes](https://maple.gg/u/%EC%B0%B8%EC%9D%B4)
     - [서니렌, Union, Arch Mage (Fire/Poison)](https://maple.gg/u/%EC%84%9C%EB%8B%88%EB%A0%8C)
-    - [문몬, Union, Arch Mage (Fire/Poison)](https://maple.gg/u/%EB%AC%B8%EB%AA%AC)
+    - [승지, Union, Arch Mage (Fire/Poison)](https://maple.gg/u/%EC%8A%B9%EC%A7%80)
     - [마찰이, Uninon, Adele](https://maple.gg/u/%EB%A7%88%EC%B0%B0%EC%9D%B4)
-    - [켁댕, Union, Bishop](https://maple.gg/u/%EC%BC%81%EB%8C%95)
+    - [엄준식, Union, Bishop](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
     - [례특, Union, Phantom](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
     - [메다희, Reboot1, Hero](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
     - [븝헛, Reboot2, Wind Archer](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
 
 ### Initial Interface
 
-![img](interface_img/i_interface.png)
+![img](/assets/img/projects/2022-06-10-mapleStory-wealth-acquisition-timer/i_interface.png)
 
 ### Running Interface
 
-![img](interface_img/r_interface.png)
+![img](/assets/img/projects/2022-06-10-mapleStory-wealth-acquisition-timer/r_interface.png)
+
+
+### Music Reference
+
+1. [ Angelic Buster Lyric : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]
+2. [ Town BGM : https://maplestory.nexon.com/Media/Music ]
+3. [ https://downloads.khinsider.com/game-soundtracks/album/maplestory-music ]
+
 
 ### Dev
 
 1. Python 3.11.3-win
 2. pyinstaller 5.12.0
 3. PyQt5
+
 
 ### Build
 
@@ -71,9 +82,3 @@ New Version Release : 2023-06-22
     ],
 
 3. pyinstaller .\RiceHarvester.spec
-
-### Music Reference
-
-1. [ Angelic Buster Lyric : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]
-2. [ Town BGM : https://maplestory.nexon.com/Media/Music ]
-3. [ https://downloads.khinsider.com/game-soundtracks/album/maplestory-music ]
