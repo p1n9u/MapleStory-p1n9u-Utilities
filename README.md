@@ -7,7 +7,6 @@ New Version Release : 2023-06-22
 ### Download
 
 - [Blog](https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/)
-- [Github Repo](https://github.com/p1n9u/MapleStory-Wealth-Acquisition-Timer)
 - [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
     - exe file  
     - google fonts  
@@ -39,15 +38,15 @@ New Version Release : 2023-06-22
     - [유니온@서니렌: 아크메이지(불/독)](https://maple.gg/u/%EC%84%9C%EB%8B%88%EB%A0%8C)
     - [유니온@승지: 아크메이지(불/독)](https://maple.gg/u/%EC%8A%B9%EC%A7%80)
     - [유니온@마찰이: 아델](https://maple.gg/u/%EB%A7%88%EC%B0%B0%EC%9D%B4)
-    - [유니온@엄준식 비숍](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
-    - [유니온@례특 팬텀](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
-    - [리부트1@메다희 히어로](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
-    - [리부트1@댕세구 비숍](https://maple.gg/u/%EB%8C%95%EC%84%B8%EA%B5%AC)
-    - [리부트2@븝헛 윈드브레이커](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
+    - [유니온@엄준식: 비숍](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
+    - [유니온@례특: 팬텀](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
+    - [리부트1@메다희: 히어로](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
+    - [리부트1@댕세구: 비숍](https://maple.gg/u/%EB%8C%95%EC%84%B8%EA%B5%AC)
+    - [리부트2@븝헛: 윈드브레이커](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
 - Special Thx
-    - [유니온@SG천 바이퍼](https://maple.gg/u/SG%EC%B2%9C)
-    - [유니온@퀸효 아크메이지(불/독)](https://maple.gg/u/%ED%80%B8%ED%9A%A8)
-    - [Lunes@유니온 길드](https://maple.gg/guild/union/Lunes)
+    - [유니온@SG천: 바이퍼](https://maple.gg/u/SG%EC%B2%9C)
+    - [유니온@퀸효: 아크메이지(불/독)](https://maple.gg/u/%ED%80%B8%ED%9A%A8)
+    - [Lunes@유니온: 길드](https://maple.gg/guild/union/Lunes)
 
 ### Initial Interface
 
