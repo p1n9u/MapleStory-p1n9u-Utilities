@@ -51,11 +51,11 @@ New Version Release : 2023-06-22
 
 ### Initial Interface
 
-![img](/assets/img/projects/2022-06-10-mapleStory-wealth-acquisition-timer/i_interface.png)
+![img](interface_img/i_interface.png)
 
 ### Running Interface
 
-![img](/assets/img/projects/2022-06-10-mapleStory-wealth-acquisition-timer/r_interface.png)
+![img](interface_img/r_interface.png)
 
 
 ### Music Reference
