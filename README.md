@@ -30,19 +30,24 @@ New Version Release : 2023-06-22
 - v1.0.0-beta : 2023-02-24
 - v0.0.0-alpha : 2022-06-10
 
-### Tested Users
+### In Game
 
 - Developer
-    - [p1n9u, Union, Illium](https://maple.gg/u/p1n9u)
+    - [유니온@p1n9u 일리움](https://maple.gg/u/p1n9u)
+- Tested Users
+    - [유니온@참이: 메르세데스](https://maple.gg/u/%EC%B0%B8%EC%9D%B4)
+    - [유니온@서니렌: 아크메이지(불/독)](https://maple.gg/u/%EC%84%9C%EB%8B%88%EB%A0%8C)
+    - [유니온@승지: 아크메이지(불/독)](https://maple.gg/u/%EC%8A%B9%EC%A7%80)
+    - [유니온@마찰이: 아델](https://maple.gg/u/%EB%A7%88%EC%B0%B0%EC%9D%B4)
+    - [유니온@엄준식 비숍](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
+    - [유니온@례특 팬텀](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
+    - [리부트1@메다희 히어로](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
+    - [리부트1@댕세구 비숍](https://maple.gg/u/%EB%8C%95%EC%84%B8%EA%B5%AC)
+    - [리부트2@븝헛 윈드브레이커](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
 - Special Thx
-    - [참이, Union, Mercedes](https://maple.gg/u/%EC%B0%B8%EC%9D%B4)
-    - [서니렌, Union, Arch Mage (Fire/Poison)](https://maple.gg/u/%EC%84%9C%EB%8B%88%EB%A0%8C)
-    - [승지, Union, Arch Mage (Fire/Poison)](https://maple.gg/u/%EC%8A%B9%EC%A7%80)
-    - [마찰이, Uninon, Adele](https://maple.gg/u/%EB%A7%88%EC%B0%B0%EC%9D%B4)
-    - [엄준식, Union, Bishop](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
-    - [례특, Union, Phantom](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
-    - [메다희, Reboot1, Hero](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
-    - [븝헛, Reboot2, Wind Archer](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
+    - [유니온@SG천 바이퍼](https://maple.gg/u/SG%EC%B2%9C)
+    - [유니온@퀸효 아크메이지(불/독)](https://maple.gg/u/%ED%80%B8%ED%9A%A8)
+    - [Lunes@유니온 길드](https://maple.gg/guild/union/Lunes)
 
 ### Initial Interface
 
