@@ -6,7 +6,7 @@ New Version Release : 2023-06-22
 
 ### Download
 
-- [Blog]https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/
+- [Blog](https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/)
 - [Github Repo](https://github.com/p1n9u/MapleStory-Wealth-Acquisition-Timer)
 - [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
     - exe file  
