@@ -7,6 +7,8 @@ import sys
 import time
 import math
 import winsound
+import logging
+import traceback
 
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -16,7 +18,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QImage #, QFont, QColor
 from PyQt5.QtCore import QDateTime, Qt
 from PyQt5.QtCore import QTimer #, QTime
 
-
+logging.basicConfig(filename='./error.log', level=logging.ERROR)
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -2227,7 +2229,10 @@ class WindowClass(QMainWindow, form_class):
 # global
 
 if __name__ == "__main__" :
-    app = QApplication(sys.argv)
-    myWindow = WindowClass()
-    myWindow.show()
-    app.exec_()
+    try:
+        app = QApplication(sys.argv)
+        myWindow = WindowClass()
+        myWindow.show()
+        app.exec_()
+    except:
+        logging.error(traceback.format_exc())

@@ -1,4 +1,4 @@
-('D:\\MSp1n9utils\\build\\MSp1n9utils\\PYZ-00.pyz',
+('D:\\MapleStory-p1n9u-Utils\\build\\MSp1n9utils\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\kimdowon\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),
