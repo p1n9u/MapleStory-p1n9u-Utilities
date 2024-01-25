@@ -482,14 +482,14 @@ class WindowClass(QMainWindow, form_class):
         self.wa_ss = 0
         self.wa_mm = 0
         self.wa_hh = 0
-        self.lb_wa_time.clear()
-        self.lb_wa_cnt.clear()
         self.wa_pb_val = 0
         self.pb_wa.setValue(0)
         
     def clicked_btn_wa_stop(self):
         self.cb_prog_mini.setCheckState(0)
         self.wa_stop_progress()
+        self.lb_wa_time.setText('0:00:00')
+        self.lb_wa_cnt.setText('0')
         log_num = str(random.randrange(1000, 9999))
         self.txt_wa_log.setPlainText('먼치의 삶 체험 종료 - ' + log_num)
         
@@ -586,6 +586,7 @@ class WindowClass(QMainWindow, form_class):
         self.wa_estop_progress()
         self.wa_etimer.start()
         log_num = str(random.randrange(1000, 9999))
+        self.lb_wa_ecnt.setText('1')
         self.txt_wa_log.setPlainText('연뿌 타이머 시작 - ' + log_num)
 
     def wa_estop_progress(self):
@@ -594,11 +595,11 @@ class WindowClass(QMainWindow, form_class):
         self.wa_ess = 0
         self.wa_emm = 0
         self.wa_ehh = 0
-        self.lb_wa_etime.clear()
-        self.lb_wa_ecnt.clear()
-
+        
     def clicked_btn_wa_estop(self):
         self.wa_estop_progress()
+        self.lb_wa_etime.setText('0:00:00')
+        self.lb_wa_ecnt.setText('0')
         log_num = str(random.randrange(1000, 9999))
         self.txt_wa_log.setPlainText('연뿌 타이머 종료 - ' + log_num)
 
@@ -628,19 +629,20 @@ class WindowClass(QMainWindow, form_class):
 
     # wa portal timer
     def clicked_btn_wa_pstart(self):
-        self.wa_estop_progress()
+        self.wa_pstop_progress()
         self.wa_ptimer.start()
         log_num = str(random.randrange(1000, 9999))
         self.txt_wa_log.setPlainText('포탈 타이머 시작 - ' + log_num)
 
     def wa_pstop_progress(self):
         self.wa_ptimer.stop()
-        self.lb_wa_ptime.setStyleSheet('color: black;')
+        self.wa_pflag = 1
         self.wa_pss = 90
         self.lb_wa_ptime.setText(str(self.wa_pss))
-
+        self.lb_wa_ptime.setStyleSheet('color: black;')
+        
     def clicked_btn_wa_pstop(self):
-        self.wa_estop_progress()
+        self.wa_pstop_progress()
         log_num = str(random.randrange(1000, 9999))
         self.txt_wa_log.setPlainText('포탈 타이머 종료 - ' + log_num)
 
@@ -655,7 +657,7 @@ class WindowClass(QMainWindow, form_class):
             self.wa_pss += 1
             self.lb_wa_ptime.setText(str(self.wa_pss))
             if (self.wa_pss == 45):
-                self.wa_pflag = 1
+                
                 self.clicked_btn_wa_pstop()
 
     def clicked_btn_wa_preset(self):

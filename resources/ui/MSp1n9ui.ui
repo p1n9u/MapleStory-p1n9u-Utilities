@@ -976,9 +976,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="lb_wa_time">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>100</x>
         <y>490</y>
-        <width>101</width>
+        <width>111</width>
         <height>31</height>
        </rect>
       </property>
@@ -994,7 +994,7 @@ color: rgb(255, 255, 255);</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="text">
-       <string>00:00:00</string>
+       <string>0:00:00</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1003,9 +1003,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="lb_wa_cnt">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>300</x>
         <y>490</y>
-        <width>101</width>
+        <width>51</width>
         <height>31</height>
        </rect>
       </property>
@@ -1081,9 +1081,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="lb_wa_etime">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>100</x>
         <y>730</y>
-        <width>101</width>
+        <width>111</width>
         <height>31</height>
        </rect>
       </property>
@@ -1099,7 +1099,7 @@ color: rgb(255, 255, 255);</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="text">
-       <string>00:00:00</string>
+       <string>0:00:00</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1132,9 +1132,9 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="lb_wa_ecnt">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>300</x>
         <y>730</y>
-        <width>101</width>
+        <width>51</width>
         <height>31</height>
        </rect>
       </property>

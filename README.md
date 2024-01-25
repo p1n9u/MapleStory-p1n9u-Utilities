@@ -11,13 +11,17 @@ New Version Release : 2024-01-24
 - [Dropbox](https://www.dropbox.com/scl/fi/klkt6ik1ofhh1iuratjfg/_240125.zip?rlkey=q4v16ncwhckshfy3zqumi6kxu&dl=0) : LTS Version
     - MSp1n9utils.exe: 실행 파일
     - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
-    - log: 프로그램 에러로그 기록
-    - nexon_api_key: 자신의 넥슨 오픈 API키 저장
+    - log: 프로그램 에러 로그 기록
+    - nexon_api_key: 사용자의 넥슨 오픈 API 키 저장
     - 매뉴얼
+    - 패치노트
 
 ### Version
 
-- v3.0.1-240125 : LTS, Testing.. Distribution not supported
+- v3.0.2-240125 : LTS, Testing..
+    - 폴프 타이머 오류 수정
+    - 재획 타이머 ui 수정
+- v3.0.1-240125 
     - 에러 로깅 기능 추가
     - 화면 상단 고정 기능 추가
 - v3.0.0-240124
