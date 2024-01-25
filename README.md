@@ -6,13 +6,14 @@ New Version Release : 2024-01-24
 
 ### Download
 
-- Not LTS version
-- [Blog](https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/)
-- [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
+- v3.0.1
+- [Blog](https://p1n9u.com) Not LTS Version in Blog
+- [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88) : LTS Version
     - MSp1n9utils.exe: 실행 파일
     - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
     - log: 프로그램 에러로그 기록
     - nexon_api_key: 자신의 넥슨 오픈 API키 저장
+    - 매뉴얼
 
 ### Version
 
