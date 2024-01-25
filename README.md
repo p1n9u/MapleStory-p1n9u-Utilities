@@ -16,7 +16,10 @@ New Version Release : 2024-01-24
 
 ### Version
 
-- v3.0.0-240124 : LTS, Testing.. Distribution not supported
+- v3.0.1-240125 : LTS, Testing.. Distribution not supported
+    - 에러 로깅 기능 추가
+    - 화면 상단 고정 기능 추가
+- v3.0.0-240124
     - update feature
         1. v2: 재획타이머 개선
         2. 보스타이머 추가: 칼로스 + 웹/미디어
