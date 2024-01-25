@@ -8,7 +8,7 @@ New Version Release : 2024-01-24
 
 - v3.0.1
 - [Blog](https://p1n9u.com) Not LTS Version in Blog
-- [Dropbox](https://www.dropbox.com/scl/fi/klkt6ik1ofhh1iuratjfg/_240125.zip?rlkey=q4v16ncwhckshfy3zqumi6kxu&dl=0) : LTS Version
+- [Dropbox](https://www.dropbox.com/scl/fi/tvmwmhl09din4vlofugab/_240125.zip?rlkey=r0o45n7i65l6lgs2bz58s5el4&dl=0) : LTS Version
     - MSp1n9utils.exe: 실행 파일
     - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
     - log: 프로그램 에러 로그 기록
