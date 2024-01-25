@@ -6,15 +6,15 @@ New Version Release : 2024-01-24
 
 ### Download
 
-- v3.0.1
-- [Blog](https://p1n9u.com) Not LTS Version in Blog
-- [Dropbox](https://www.dropbox.com/scl/fi/tvmwmhl09din4vlofugab/_240125.zip?rlkey=r0o45n7i65l6lgs2bz58s5el4&dl=0) : LTS Version
-    - MSp1n9utils.exe: 실행 파일
-    - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
-    - log: 프로그램 에러 로그 기록
-    - nexon_api_key: 사용자의 넥슨 오픈 API 키 저장
-    - 매뉴얼
-    - 패치노트
+- v3.0.2
+    - [Dropbox](https://www.dropbox.com/scl/fi/tvmwmhl09din4vlofugab/_240125.zip?rlkey=r0o45n7i65l6lgs2bz58s5el4&dl=0) : LTS Version
+        - MSp1n9utils.exe: 실행 파일
+        - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
+        - log: 프로그램 에러 로그 기록
+        - nexon_api_key: 사용자의 넥슨 오픈 API 키 저장
+        - 매뉴얼
+        - 패치노트
+    - [Blog](https://p1n9u.com) Not LTS Version in Blog
 
 ### Version
 
