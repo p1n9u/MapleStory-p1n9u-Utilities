@@ -1,22 +1,29 @@
-# 메이플스토리 재획 타이머
+# 메이플스토리 재획 타이머 (굉구 유틸리티)
 
-## MapleStory Wealth Acquisition Timer
+## MapleStory Wealth Acquisition Timer (p1n9u utilites)
 
-New Version Release : 2023-06-22
+New Version Release : 2024-01-24
 
 ### Download
 
+- Not LTS version
 - [Blog](https://p1n9u.com/projects/2022-06-10-mapleStory-wealth-acquisition-timer/)
 - [Dropbox](https://www.dropbox.com/scl/fi/o3dsqfcbhxc4zwenzq32v/_230622-2.zip?dl=0&rlkey=b10lnhk4julwkf63ju8o58w88)  
-    - exe file  
-    - google fonts  
-        - [Roboto](https://fonts.google.com/specimen/Roboto)  
-        - [Noto Sans Korean](https://fonts.google.com/noto/specimen/Noto+Sans+KR)  
-    - 다운받고 압축풀고 사용. 글자 밀림 현상 수정을 원하면 폰트 설치.  
+    - MSp1n9utils.exe: 실행 파일
+    - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
+    - log: 프로그램 에러로그 기록
+    - nexon_api_key: 자신의 넥슨 오픈 API키 저장
 
 ### Version
 
-- v2.0.2-230622 : Latest, ZIP FILE(재획타이머_230622-2)
+- v3.0.0-240124 : LTS, Testing.. Distribution not supported
+    - update feature
+        1. v2: 재획타이머 개선
+        2. 보스타이머 추가: 칼로스 + 웹/미디어
+        3. 캐릭터검색 추가: 넥슨 OPEN API
+        4. 웹사이트 와드 추가: 웹/미디어
+        5. 카피라이트 추가: Licenses
+- v2.0.2-230622
     - 농기구 멘트 가독성 패치
 - v2.0.1-230622
     - 시간밀림현상 수정
@@ -29,60 +36,26 @@ New Version Release : 2023-06-22
 - v1.0.0-beta : 2023-02-24
 - v0.0.0-alpha : 2022-06-10
 
-### In Game
 
-- Developer
-    - [유니온@p1n9u 일리움](https://maple.gg/u/p1n9u)
-- Tested Users
-    - [유니온@참이: 메르세데스](https://maple.gg/u/%EC%B0%B8%EC%9D%B4)
-    - [유니온@서니렌: 아크메이지(불/독)](https://maple.gg/u/%EC%84%9C%EB%8B%88%EB%A0%8C)
-    - [유니온@승지: 아크메이지(불/독)](https://maple.gg/u/%EC%8A%B9%EC%A7%80)
-    - [유니온@마찰이: 아델](https://maple.gg/u/%EB%A7%88%EC%B0%B0%EC%9D%B4)
-    - [유니온@엄준식: 비숍](https://maple.gg/u/%EC%97%84%EC%A4%80%EC%8B%9D)
-    - [유니온@례특: 팬텀](https://maple.gg/u/%EB%A1%80%ED%8A%B9)
-    - [리부트1@메다희: 히어로](https://maple.gg/u/%EB%A9%94%EB%8B%A4%ED%9D%AC)
-    - [리부트1@댕세구: 비숍](https://maple.gg/u/%EB%8C%95%EC%84%B8%EA%B5%AC)
-    - [리부트2@븝헛: 윈드브레이커](https://maple.gg/u/%EB%B8%9D%ED%97%9B)
-- Special Thx
-    - [유니온@SG천: 바이퍼](https://maple.gg/u/SG%EC%B2%9C)
-    - [유니온@퀸효: 아크메이지(불/독)](https://maple.gg/u/%ED%80%B8%ED%9A%A8)
-    - [Lunes@유니온: 길드](https://maple.gg/guild/union/Lunes)
-
-### Initial Interface
-
-![img](interface_img/i_interface.png)
-
-### Running Interface
-
-![img](interface_img/r_interface.png)
-
-
-### Music Reference
-
-1. [ Angelic Buster Lyric : Star Bubble https://www.youtube.com/watch?v=ixww1OHztbs / SpotLight ]
-2. [ Town BGM : https://maplestory.nexon.com/Media/Music ]
-3. [ https://downloads.khinsider.com/game-soundtracks/album/maplestory-music ]
+### Interface
 
 
 ### Dev
 
-1. Python 3.11.3-win
-2. pyinstaller 5.12.0
-3. PyQt5
+1. Python 3.12.0
+2. pyinstaller 6.3.0
+3. PyQt5 designer 5.14.1 (install by pip, exec command: $ designer)
 
 
 ### Build
 
-1. Build : pyinstaller --clean --onefile --noconsole --icon="resources/icon/potion.ico" --add-data="resources/\*;." -n RiceHarvester main.py
+1. Build : pyinstaller --clean --onefile --noconsole --icon="resources/icon/favicon.ico" --add-data="resources/*;." -n MSp1n9utils App.py
 
     - **Use Windows PowerShell**
+        - [reference](https://flytrap.tistory.com/entry/pyinstaller-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EB%8A%94-%EB%B0%A9%EB%B2%95-230MB-36MB)
 
 2. modify RiceHarvester.spec file
 
-    datas=[('resources/wav/*', './resources/wav'),
-    ('resources/ui/*', './resources/ui'),
-    ('resources/icon/*', './resources/icon'),
-    ('resources/img/*', './resources/img')
-    ],
+    datas=[('resources/snd/', './resources/snd'), ('resources/ui/', './resources/ui'), ('resources/icon/', './resources/icon'), ('resources/img/', './resources/img')],
 
-3. pyinstaller .\RiceHarvester.spec
+3. pyinstaller .\MSp1n9utils.spec

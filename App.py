@@ -13,12 +13,13 @@ import traceback
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from io import BytesIO
-from PIL import Image #, ImageQt
-from PyQt5.QtGui import QIcon, QPixmap, QImage #, QFont, QColor
+from PIL import Image
+from PyQt5.QtGui import QIcon, QPixmap, QImage
 from PyQt5.QtCore import QDateTime, Qt
-from PyQt5.QtCore import QTimer #, QTime
+from PyQt5.QtCore import QTimer
 
-logging.basicConfig(filename='./error.log', level=logging.ERROR)
+# NOTSET, DEBUG, INFO, ERROR, CRITICAL
+logging.basicConfig(filename='./log/MSp1n9util_ERROR.log', level=logging.ERROR)
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -63,7 +64,7 @@ class WindowClass(QMainWindow, form_class):
         self.setFixedSize(1600, 900)
         self.cb_prog_tab_hide.stateChanged.connect(self.ui_checbox_changed)
         self.cb_prog_mini.stateChanged.connect(self.ui_checbox_changed)
-        
+        self.cb_prog_on_top.stateChanged.connect(self.ui_checbox_changed)
 
         self.wa_wav_list = [
             "p",
@@ -424,6 +425,12 @@ class WindowClass(QMainWindow, form_class):
             self.setFixedSize(640, 900)
         else:
             self.setFixedSize(1600, 900)
+        if (self.cb_prog_on_top.isChecked()):
+            self.setWindowFlag(Qt.WindowStaysOnTopHint, True)
+            self.show()
+        else:
+            self.setWindowFlag(Qt.WindowStaysOnTopHint, False)
+            self.show()
 
 
 ####################################################################################################################################################################

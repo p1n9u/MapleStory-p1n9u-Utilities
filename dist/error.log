@@ -1,5 +1,0 @@
-ERROR:root:Traceback (most recent call last):
-  File "App.py", line 2234, in <module>
-  File "App.py", line 176, in __init__
-FileNotFoundError: [Errno 2] No such file or directory: './nexon_api_key/api_key_lts.txt'
-
