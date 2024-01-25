@@ -1,5 +1,9 @@
 import sys
-import requests
+
+import http.client
+from urllib import parse
+import json
+
 import heapq
 import random
 import os
@@ -17,9 +21,6 @@ from PIL import Image
 from PyQt5.QtGui import QIcon, QPixmap, QImage
 from PyQt5.QtCore import QDateTime, Qt
 from PyQt5.QtCore import QTimer
-
-# NOTSET, DEBUG, INFO, ERROR, CRITICAL
-logging.basicConfig(filename='./log/MSp1n9util_ERROR.log', level=logging.ERROR)
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +45,9 @@ def is_int_number(val):
         int_num_flag = False
     return int_num_flag
 
+# NOTSET, DEBUG, INFO, ERROR, CRITICAL
+
+logging.basicConfig(filename="log/MSp1n9util_ERROR.log", level=logging.ERROR)
 
 form = resource_path("resources/ui/MSp1n9ui.ui")
 form_class = uic.loadUiType(form)[0]
@@ -59,7 +63,6 @@ class WindowClass(QMainWindow, form_class):
         self.livetime_timer.setInterval(1000)
         self.livetime_timer.timeout.connect(self.display_livetime)
         self.livetime_timer.start()
-
 
         self.setFixedSize(1600, 900)
         self.cb_prog_tab_hide.stateChanged.connect(self.ui_checbox_changed)
@@ -173,12 +176,14 @@ class WindowClass(QMainWindow, form_class):
         self.wa_fw_cnt = 5
 
 
+
         # tab_search
-        api_key_file = open('./nexon_api_key/api_key_lts.txt', 'r')
+        api_key_file = open("nexon_api_key/api_key_lts.txt", 'r')
         api_key_data = api_key_file.read()
         self.keys = api_key_data
         self.headers = {
-            "x-nxopen-api-key": str(self.keys)
+            'accept': 'application/json',
+            'x-nxopen-api-key': str(self.keys)
         }
         self.lb_api_key.setText('API키: ' + self.keys)
         api_key_file.close()
@@ -1171,7 +1176,7 @@ class WindowClass(QMainWindow, form_class):
         
 
     def set_api_key(self, api_key):
-        api_key_file = open('./nexon_api_key/api_key_lts.txt', 'w')
+        api_key_file = open("nexon_api_key/api_key_lts.txt", 'w')
         api_key_file.write(api_key)
         api_key_file.close()
         self.keys = api_key
@@ -1181,7 +1186,7 @@ class WindowClass(QMainWindow, form_class):
         self.lb_api_key.setText('API키: ' + api_key)
 
     def make_c_url(self, tag, ocid, time):
-        c_url = "https://open.api.nexon.com/maplestory/v1/character/"
+        c_url = "/maplestory/v1/character/"
         c_url += str(tag) + '?ocid=' + ocid + "&date=" + time
 
         return c_url
@@ -1194,7 +1199,7 @@ class WindowClass(QMainWindow, form_class):
         return c_url
 
 
-    # server image load function
+    # # server image load function
     def display_s_img(self, server):
         s_img = QPixmap(resource_path("resources/img/none.gif"))
         
@@ -1769,13 +1774,13 @@ class WindowClass(QMainWindow, form_class):
 
 
     # search main/sub charactor function
-    def is_real_you(self, search_name, search_ocid, search_json, base_time):
+    def is_real_you(self, connection, search_name, search_ocid, search_json, base_time):
         search_server_str = search_json.get('world_name')
         if (search_server_str is None):
             search_server_str = '?'
         self.te_is_real_you.appendPlainText('=======================================================================================================================')
         self.te_is_real_you.appendPlainText(' ')
-        self.te_is_real_you.appendPlainText('                                                   검색중: 모든 정보 로딩까지 약 5초 정도 소요됩니다.')
+        self.te_is_real_you.appendPlainText('                                                   검색중: 모든 정보 로딩까지 약 0~2초 정도 소요됩니다.')
         self.te_is_real_you.appendPlainText(' ')
         self.te_is_real_you.appendPlainText('=======================================================================================================================')
         self.te_is_real_you.appendPlainText('                             [ Ctrl + a (전체선택) -> Ctrl + c (복사) -> Ctrl + v (붙여넣기) ] : 본/부캐 창만 가능 합니다.')
@@ -1788,12 +1793,13 @@ class WindowClass(QMainWindow, form_class):
 
 
         # ranking union
-        url_string = "https://open.api.nexon.com/maplestory/v1/ranking/union?ocid=" + search_ocid + "&date=" + base_time
-        union_base_req = requests.get(url_string, headers = self.headers)
+        url_string = "/maplestory/v1/ranking/union?ocid=" + search_ocid + "&date=" + base_time
+        connection.request("GET", url_string, headers=self.headers)
+        union_base_req = connection.getresponse()
 
-        if (union_base_req.status_code == 200):
+        if (union_base_req.status == 200):
             self.te_is_real_you.appendPlainText('[유니온 기반 검색]')
-            union_base_json = union_base_req.json()
+            union_base_json = json.loads(union_base_req.read().decode('utf-8'))
             union_base_obj = union_base_json.get('ranking')
             if (len(union_base_obj) != 0):
                 for obj in union_base_obj:
@@ -1802,7 +1808,7 @@ class WindowClass(QMainWindow, form_class):
             else:
                 self.te_is_real_you.appendPlainText("    갱신필요")
         else:
-            search_log += 'sub 0: 유니온 랭킹 정보 조회 실패 GET(' + str(union_base_req.status_code) + ')'
+            search_log += 'sub 0: 유니온 랭킹 정보 조회 실패 GET(' + str(union_base_req.status) + ')'
             self.te_is_real_you.appendPlainText(search_log)
             return
 
@@ -1811,12 +1817,13 @@ class WindowClass(QMainWindow, form_class):
 
 
         # ranking achievement
-        url_string = "https://open.api.nexon.com/maplestory/v1/ranking/achievement?date=" + base_time + "&ocid=" + search_ocid
-        achive_base_req = requests.get(url_string, headers = self.headers)
+        url_string = "/maplestory/v1/ranking/achievement?date=" + base_time + "&ocid=" + search_ocid
+        connection.request("GET", url_string, headers=self.headers)
+        achive_base_req = connection.getresponse()
 
-        if (achive_base_req.status_code == 200):
+        if (achive_base_req.status == 200):
             self.te_is_real_you.appendPlainText('[업적 기반 검색]')
-            achive_base_json = achive_base_req.json()
+            achive_base_json = json.loads(achive_base_req.read().decode('utf-8'))
             achive_base_obj = achive_base_json.get('ranking')
             if (len(achive_base_obj) != 0):
                 for obj in achive_base_obj:
@@ -1825,7 +1832,7 @@ class WindowClass(QMainWindow, form_class):
             else:
                 self.te_is_real_you.appendPlainText("    갱신필요")
         else:
-            search_log += 'sub 1: 업적 랭킹 정보 조회 실패 GET(' + str(achive_base_req.status_code) + ')'
+            search_log += 'sub 1: 업적 랭킹 정보 조회 실패 GET(' + str(achive_base_req.status) + ')'
             self.te_is_real_you.appendPlainText(search_log)
             return
 
@@ -1845,393 +1852,419 @@ class WindowClass(QMainWindow, form_class):
 
         # reset previous data
         self.reset_search_tap()
-        
 
-        # character ocid request
-        url_str = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + str(c_name)
-        ocid_req = requests.get(url_str, headers = self.headers)
-
-        if (ocid_req.status_code == 200):
-            ocid_json = ocid_req.json()
-            ocid_str = ocid_json.get('ocid')
+        try:
+            conn = http.client.HTTPSConnection("open.api.nexon.com")
             
+            c_name_encoded = parse.quote(str(c_name))
+            # character ocid request
+            url_str = "/maplestory/v1/id?character_name=" + c_name_encoded
+            conn.request("GET", url_str, headers=self.headers)
+            ocid_req = conn.getresponse()
 
-            # character basic request
-            url_str = self.make_c_url('basic', ocid_str, base_time_str)
-            c_basic_req = requests.get(url_str, headers = self.headers)
-
-            if (c_basic_req.status_code == 200):
-                c_basic_json = c_basic_req.json()
-                basic_c_stime = c_basic_json.get('date')
-                basic_c_stime = basic_c_stime.split('T')[0]
-                self.lb_c_stime.setText('검색 기준시: ' + basic_c_stime)
-
-                basic_c_name = c_basic_json.get('character_name')
-                self.lb_c_name.setText(basic_c_name)
-
-                # search main/sub charactor function call
-                self.is_real_you(basic_c_name, ocid_str, c_basic_json, base_time_str)
-
-                basic_c_server_str = c_basic_json.get('world_name')
-                if (basic_c_server_str is not None):
-                    basic_c_server = '서버:       ' + basic_c_server_str
-                    # server image load function call
-                    self.display_s_img(basic_c_server_str)
-                else:
-                    basic_c_server = '?'
-                self.lb_c_server.setText(basic_c_server)
-
-                basic_c_gen = '성별: ' + c_basic_json.get('character_gender') + '캐'
-                self.lb_c_gen.setText(basic_c_gen)
-
-                basic_c_class = '직업: ' + c_basic_json.get('character_class')
-                self.lb_c_class.setText(basic_c_class)
-
-                # progress bar support only integer type
-                basic_c_level = '레벨: ' + str(c_basic_json.get('character_level'))
-                self.lb_c_level.setText(basic_c_level)
-                basic_c_exp = float(c_basic_json.get('character_exp_rate'))
-                basic_c_exp_pb = round(basic_c_exp)
-                basic_c_exp = str(basic_c_exp) + '%'
-                self.lb_c_exp.setText(basic_c_exp)
-                self.pb_exp.setValue(basic_c_exp_pb)
+            if (ocid_req.status == 200):
+                ocid_json = json.loads(ocid_req.read().decode('utf-8'))
+                ocid_str = ocid_json.get('ocid')
                 
-                basic_c_gname_str = c_basic_json.get('character_guild_name')
-                if (basic_c_gname_str is not None):
-                    basic_c_gname = '길드: ' + c_basic_json.get('character_guild_name')
-                    self.lb_c_gname.setText(basic_c_gname)
-                else:
-                    self.lb_c_gname.setText('길드: (없음)')
+                # character basic request
+                url_str = self.make_c_url('basic', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_basic_req = conn.getresponse()
 
-                # character image
-                c_img_url = c_basic_json.get('character_image')
-                c_img_res = requests.get(c_img_url)
-                if (c_img_res.status_code == 200):
-                    c_img_content = Image.open(BytesIO(c_img_res.content))
-                    c_img_content = c_img_content.convert("RGBA")
-                    c_img_data = c_img_content.tobytes("raw", "RGBA")
-                    c_img_qt = QImage(c_img_data, c_img_content.size[0], c_img_content.size[1], QImage.Format_RGBA8888)
-                    c_img_pixmap = QPixmap.fromImage(c_img_qt)
-                    self.lb_c_img.setPixmap(c_img_pixmap)
-                else:
-                    self.lb_c_img.setText(str(c_img_res.status_code))
-            else:
-                search_log += '1: 캐릭터 기본 정보 조회 실패 GET(' + str(c_basic_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
+                if (c_basic_req.status == 200):
+                    c_basic_json = json.loads(c_basic_req.read().decode('utf-8'))
 
+                    basic_c_stime = c_basic_json.get('date')
+                    basic_c_stime = basic_c_stime.split('T')[0]
+                    self.lb_c_stime.setText('검색 기준시: ' + basic_c_stime)
 
-            # character popularity request
-            url_str = self.make_c_url('popularity', ocid_str, base_time_str)
-            c_pop_req = requests.get(url_str, headers = self.headers)
+                    basic_c_name = c_basic_json.get('character_name')
+                    self.lb_c_name.setText(basic_c_name)
 
-            if (c_pop_req.status_code == 200):
-                c_pop_json = c_pop_req.json()
+                    # search main/sub charactor function call
+                    self.is_real_you(conn, basic_c_name, ocid_str, c_basic_json, base_time_str)
 
-                pop_c_pop_str = '인기도: ' + str(c_pop_json.get('popularity'))
-                self.lb_c_pop.setText(pop_c_pop_str)
-            else:
-                search_log += '2: 캐릭터 인기도 정보 조회 실패 GET(' + str(c_pop_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
+                    basic_c_server_str = c_basic_json.get('world_name')
+                    if (basic_c_server_str is not None):
+                        basic_c_server = '서버:       ' + basic_c_server_str
+                        # server image load function call
+                        self.display_s_img(basic_c_server_str)
+                    else:
+                        basic_c_server = '?'
+                    self.lb_c_server.setText(basic_c_server)
 
+                    basic_c_gen = '성별: ' + c_basic_json.get('character_gender') + '캐'
+                    self.lb_c_gen.setText(basic_c_gen)
 
-            # character stat request
-            url_str = self.make_c_url('stat', ocid_str, base_time_str)
-            c_stat_req = requests.get(url_str, headers = self.headers)
+                    basic_c_class = '직업: ' + c_basic_json.get('character_class')
+                    self.lb_c_class.setText(basic_c_class)
 
-            if (c_stat_req.status_code == 200):
-                c_stat_json = c_stat_req.json()
-                c_stat_obj = c_stat_json.get('final_stat')
-                for obj in c_stat_obj:
-                    # character stat display function call, stat_value is type(str)
-                    self.display_stat(obj.get('stat_name'), obj.get('stat_value'))
-            else:
-                search_log += '3: 캐릭터 종합 능력치 정보 조회 실패 GET(' + str(c_stat_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # character hyper stat request
-            url_str = self.make_c_url('hyper-stat', ocid_str, base_time_str)
-            c_hyper_req = requests.get(url_str, headers = self.headers)
-
-            if (c_hyper_req.status_code == 200):
-                c_hyper_json = c_hyper_req.json()
-                
-                c_hyper_pnum = str(c_hyper_json.get('use_preset_no'))
-                self.lb_h_pnum.setText('    적용중인 프리셋: ' + c_hyper_pnum)
-                c_hyper_tpnt = int(c_hyper_json.get('use_available_hyper_stat'))
-                c_hyper_apnt_tag = 'hyper_stat_preset_' + c_hyper_pnum + '_remain_point'
-                c_hyper_apnt = int(c_hyper_json.get(c_hyper_apnt_tag))
-                c_hyper_upnt = c_hyper_tpnt - c_hyper_apnt
-                self.lb_h_tpnt.setText('총 스탯 포인트: ' + str(c_hyper_tpnt))
-                self.lb_h_upnt.setText('사용 스탯 포인트: ' + str(c_hyper_upnt))
-                self.lb_h_apnt.setText('잔여 스탯 포인트: ' + str(c_hyper_apnt))
-
-                c_hyper_obj_str = 'hyper_stat_preset_' + c_hyper_pnum
-                c_hyper_obj = c_hyper_json.get(c_hyper_obj_str)
-                for obj in c_hyper_obj:
-                    # character hyper stat display function call, stat_increase is type(str)
-                    self.display_hyper_stat(obj.get('stat_type'), obj.get('stat_increase'))
-            else:
-                search_log += '4: 캐릭터 하이퍼스탯 정보 조회 실패 GET(' + str(c_hyper_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # character propensity request
-            url_str = self.make_c_url('propensity', ocid_str, base_time_str)
-            c_prop_req = requests.get(url_str, headers = self.headers)
-
-            if (c_prop_req.status_code == 200):
-                c_prop_json = c_prop_req.json()
-                prop_c_chm = str(c_prop_json.get('charm_level'))
-                self.lb_pp_chm.setText('매력: ' + prop_c_chm + ' lv')
-                prop_c_crm = str(c_prop_json.get('charisma_level'))
-                self.lb_pp_crm.setText('카리스마: ' + prop_c_crm + ' lv')
-                prop_c_hdc = str(c_prop_json.get('handicraft_level'))
-                self.lb_pp_hdc.setText('손재주: ' + prop_c_hdc + ' lv')
-                prop_c_ist = str(c_prop_json.get('insight_level'))
-                self.lb_pp_ist.setText('통찰력: ' + prop_c_ist + ' lv')
-                prop_c_ssb = str(c_prop_json.get('sensibility_level'))
-                self.lb_pp_ssb.setText('감성: ' + prop_c_ssb + ' lv')
-                prop_c_wln = str(c_prop_json.get('willingness_level'))
-                self.lb_pp_wln.setText('의지: ' + prop_c_wln + ' lv')
-            else:
-                search_log += '5: 캐릭터 성향 정보 조회 실패 GET(' + str(c_prop_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-            
-
-            # character ability request
-            url_str = self.make_c_url('ability', ocid_str, base_time_str)
-            c_abil_req = requests.get(url_str, headers = self.headers)
-
-            if (c_abil_req.status_code == 200):
-                c_abil_json = c_abil_req.json()
-                c_abil_obj = c_abil_json.get('ability_info')
-                for obj in c_abil_obj:
-                    # character ability display function call, ability_no is type(str)
-                    self.display_ability(obj.get('ability_no'), obj.get('ability_grade'), obj.get('ability_value'))
-            else:
-                search_log += '6: 캐릭터 어빌리티 정보 조회 실패 GET(' + str(c_abil_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # start: equip list
-            self.w_list_item.addItem('=======================================================================================================================')
-
-
-            # character equip item request - mechanic, evan equipments do not supoort
-            url_str = self.make_c_url('item-equipment', ocid_str, base_time_str)
-            c_ieq_req = requests.get(url_str, headers = self.headers)
-
-            if (c_ieq_req.status_code == 200):
-                c_ieq_json = c_ieq_req.json()
-                c_ieq_obj = c_ieq_json.get('item_equipment')
-                for obj in c_ieq_obj:
-                    # character equip item display function call
-                    self.display_equip(obj)
-
-                ieq_title = c_ieq_json.get('title')
-                if (ieq_title is not None):
-                    ieq_title_txt = ieq_title.get('title_name')
-                    self.w_list_item.addItem('칭호: <' + ieq_title_txt + '>')
-            else:
-                search_log += '7: 캐릭터 장착 장비 정보 조회 실패 GET(' + str(c_ieq_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # end: equip list
-            self.w_list_item.addItem('=======================================================================================================================')
-
-
-            # character equip symbol request
-            url_str = self.make_c_url('symbol-equipment', ocid_str, base_time_str)
-            c_seq_req = requests.get(url_str, headers = self.headers)
-
-            if (c_seq_req.status_code == 200):
-                c_seq_json = c_seq_req.json()
-                c_seq_obj = c_seq_json.get('symbol')
-                for obj in c_seq_obj:
-                    # character equip symbol display function call
-                    self.display_symbol(obj.get('symbol_name'), obj.get('symbol_level'))
-            else:
-                search_log += '8: 캐릭터 장착 심볼 정보 조회 실패 GET(' + str(c_seq_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-            # start: skill list
-            self.w_list_skill.addItem('=======================================================================================================================')
-
-
-            # character hyper passive skill request
-            url_str = self.make_c_url('skill', ocid_str, base_time_str)
-            url_str += '&character_skill_grade=hyperpassive'
-            c_hpass_req = requests.get(url_str, headers = self.headers)
-
-            if (c_hpass_req.status_code == 200):
-                c_hpass_json = c_hpass_req.json()
-                c_hpass_obj = c_hpass_json.get('character_skill')
-                if (len(c_hpass_obj) != 0):
-                    self.w_list_skill.addItem('[하이퍼 패시브 스킬]')
-                    for obj in c_hpass_obj:
-                        # character skill display function call
-                        self.display_skill(obj)
-                    self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
-            else:
-                search_log += '9: 캐릭터 하이퍼 패시브 스킬 정보 조회 실패 GET(' + str(c_hpass_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # character 5-grade skill request
-            url_str = self.make_c_url('skill', ocid_str, base_time_str)
-            url_str += '&character_skill_grade=5'
-            c_5skill_req = requests.get(url_str, headers = self.headers)
-
-            if (c_5skill_req.status_code == 200):
-                c_5skill_json = c_5skill_req.json()
-                c_5skill_obj = c_5skill_json.get('character_skill')
-                if (len(c_5skill_obj) != 0):
-                    self.w_list_skill.addItem('[5차 스킬]')
-                    for obj in c_5skill_obj:
-                        # character skill display function call
-                        self.display_skill(obj)
-                    self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
-            else:
-                search_log += '10: 캐릭터 5차 스킬 정보 조회 실패 GET(' + str(c_5skill_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # character 6-grade skill request
-            url_str = self.make_c_url('skill', ocid_str, base_time_str)
-            url_str += '&character_skill_grade=6'
-            c_6skill_req = requests.get(url_str, headers = self.headers)
-
-            if (c_6skill_req.status_code == 200):
-                c_6skill_json = c_6skill_req.json()
-                c_6skill_obj = c_6skill_json.get('character_skill')
-                if (len(c_6skill_obj) != 0):
-                    self.w_list_skill.addItem('[6차 스킬]')
-                    for obj in c_6skill_obj:
-                        # character skill display function call
-                        self.display_skill(obj)
-                    self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
-            else:
-                search_log += '11: 캐릭터 6차 스킬 정보 조회 실패 GET(' + str(c_6skill_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-            
-
-            # character 6-stat request
-            url_str = self.make_c_url('hexamatrix-stat', ocid_str, base_time_str)
-            c_hexastat_req = requests.get(url_str, headers = self.headers)
-            
-            if (c_hexastat_req.status_code == 200):
-                c_hexastat_json = c_hexastat_req.json()
-                c_hexastat_obj = c_hexastat_json.get('character_hexa_stat_core')
-                if (len(c_hexastat_obj) != 0):
-                    self.w_list_skill.addItem('[헥사 스탯]')
-                    for obj in c_hexastat_obj:
-                        # character 6-stat display function call
-                        self.display_hexastat(obj)
-            else:
-                search_log += '12: 캐릭터 헥사 스탯 정보 조회 실패 GET(' + str(c_hexastat_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-            
-
-            # end: skill list
-            self.w_list_skill.addItem('=======================================================================================================================')
-
-
-            # character dojang request
-            url_str = self.make_c_url('dojang', ocid_str, base_time_str)
-            c_dojang_req = requests.get(url_str, headers = self.headers)
-
-            if (c_dojang_req.status_code == 200):
-                c_dojang_json = c_dojang_req.json()
-                c_dojang_floor = c_dojang_json.get('dojang_best_floor')
-                c_dojang_rtime = c_dojang_json.get('date_dojang_record')
-                if (c_dojang_floor is not None and c_dojang_rtime is not None):
-                    c_dojang_rtime = c_dojang_rtime.split('T')[0]
-                    c_dojang_floor_str = '무릉: ' + str(c_dojang_floor) + '층 / ' + c_dojang_rtime + ' 갱신'
-                    self.lb_c_dojang.setText(c_dojang_floor_str)
-                else:
-                    c_dojang_floor_str = '무릉: (기록없음)'
-                    self.lb_c_dojang.setText(c_dojang_floor_str)
-            else:
-                search_log += '13: 캐릭터 무릉 정보 조회 실패 GET(' + str(c_dojang_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # start: union list
-            self.w_list_union.addItem('=======================================================================================================================')
-
-
-            # character union request
-            url_str = self.make_u_url('union', ocid_str, base_time_str)
-            u_union_req = requests.get(url_str, headers = self.headers)
-
-            if (u_union_req.status_code == 200):
-                u_union_json = u_union_req.json()
-                u_union_grade = u_union_json.get('union_grade')
-                u_union_level = u_union_json.get('union_level')
-                if (u_union_grade is not None and u_union_level is not None):
-                    self.w_list_union.addItem('[' + u_union_grade + ']: ' + str(u_union_level) + 'lv')
-                    self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
-                else:
-                    self.w_list_union.addItem('유니온 정보 갱신 필요')
-            else:
-                search_log += '14: 캐릭터 유니온 정보 조회 실패 GET(' + str(u_union_req.status_code) + ')'
-                self.txt_c_log.setPlainText(search_log)
-                return
-
-
-            # character union raider request
-            url_str = self.make_u_url('union-raider', ocid_str, base_time_str)
-            u_raider_req = requests.get(url_str, headers = self.headers)
-
-            if (u_raider_req.status_code == 200):
-                u_raider_json = u_raider_req.json()
-
-                u_occupied_list = u_raider_json.get('union_occupied_stat')
-                if (len(u_occupied_list) != 0):
-                    self.w_list_union.addItem('[공격대 점령 효과]')
-                    for obj in u_occupied_list:
-                        self.w_list_union.addItem('    ' + obj)
-                    self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
-
-                u_raider_list = u_raider_json.get('union_raider_stat')
-                if (len(u_raider_list) != 0):
-                    self.w_list_union.addItem('[공격대원 효과]')
-                    for obj in u_raider_list:
-                        self.w_list_union.addItem('    ' + obj)
+                    # progress bar support only integer type
+                    basic_c_level = '레벨: ' + str(c_basic_json.get('character_level'))
+                    self.lb_c_level.setText(basic_c_level)
+                    basic_c_exp = float(c_basic_json.get('character_exp_rate'))
+                    basic_c_exp_pb = round(basic_c_exp)
+                    basic_c_exp = str(basic_c_exp) + '%'
+                    self.lb_c_exp.setText(basic_c_exp)
+                    self.pb_exp.setValue(basic_c_exp_pb)
                     
-            else:
-                search_log += '15: 유니온 효과 조회 실패 GET(' + str(u_raider_req.status_code) + ')'
+                    basic_c_gname_str = c_basic_json.get('character_guild_name')
+                    if (basic_c_gname_str is not None):
+                        basic_c_gname = '길드: ' + c_basic_json.get('character_guild_name')
+                        self.lb_c_gname.setText(basic_c_gname)
+                    else:
+                        self.lb_c_gname.setText('길드: (없음)')
+
+                    # character image
+                    c_img_full_url = c_basic_json.get('character_image')
+                    c_img_path_url = parse.urlsplit(c_img_full_url).path
+                    conn.request("GET", c_img_path_url, headers=self.headers)
+                    c_img_req = conn.getresponse()
+                    if (c_img_req.status == 200):
+                        c_img_content = Image.open(BytesIO(c_img_req.read()))
+                        c_img_content = c_img_content.convert("RGBA")
+                        c_img_data = c_img_content.tobytes("raw", "RGBA")
+                        c_img_qt = QImage(c_img_data, c_img_content.size[0], c_img_content.size[1], QImage.Format_RGBA8888)
+                        c_img_pixmap = QPixmap.fromImage(c_img_qt)
+                        self.lb_c_img.setPixmap(c_img_pixmap)
+                    else:
+                        self.lb_c_img.setText(str(c_img_req.status))
+                else:
+                    search_log += '1: 캐릭터 기본 정보 조회 실패 GET(' + str(c_basic_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character popularity request
+                url_str = self.make_c_url('popularity', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_pop_req = conn.getresponse()
+
+                if (c_pop_req.status == 200):
+                    c_pop_json = json.loads(c_pop_req.read().decode('utf-8'))
+
+                    pop_c_pop_str = '인기도: ' + str(c_pop_json.get('popularity'))
+                    self.lb_c_pop.setText(pop_c_pop_str)
+                else:
+                    search_log += '2: 캐릭터 인기도 정보 조회 실패 GET(' + str(c_pop_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character stat request
+                url_str = self.make_c_url('stat', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_stat_req = conn.getresponse()
+
+                if (c_stat_req.status == 200):
+                    c_stat_json = json.loads(c_stat_req.read().decode('utf-8'))
+                    c_stat_obj = c_stat_json.get('final_stat')
+                    for obj in c_stat_obj:
+                        # character stat display function call, stat_value is type(str)
+                        self.display_stat(obj.get('stat_name'), obj.get('stat_value'))
+                else:
+                    search_log += '3: 캐릭터 종합 능력치 정보 조회 실패 GET(' + str(c_stat_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character hyper stat request
+                url_str = self.make_c_url('hyper-stat', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_hyper_req = conn.getresponse()
+
+                if (c_hyper_req.status == 200):
+                    c_hyper_json = json.loads(c_hyper_req.read().decode('utf-8'))
+                    
+                    c_hyper_pnum = str(c_hyper_json.get('use_preset_no'))
+                    self.lb_h_pnum.setText('    적용중인 프리셋: ' + c_hyper_pnum)
+                    c_hyper_tpnt = int(c_hyper_json.get('use_available_hyper_stat'))
+                    c_hyper_apnt_tag = 'hyper_stat_preset_' + c_hyper_pnum + '_remain_point'
+                    c_hyper_apnt = int(c_hyper_json.get(c_hyper_apnt_tag))
+                    c_hyper_upnt = c_hyper_tpnt - c_hyper_apnt
+                    self.lb_h_tpnt.setText('총 스탯 포인트: ' + str(c_hyper_tpnt))
+                    self.lb_h_upnt.setText('사용 스탯 포인트: ' + str(c_hyper_upnt))
+                    self.lb_h_apnt.setText('잔여 스탯 포인트: ' + str(c_hyper_apnt))
+
+                    c_hyper_obj_str = 'hyper_stat_preset_' + c_hyper_pnum
+                    c_hyper_obj = c_hyper_json.get(c_hyper_obj_str)
+                    for obj in c_hyper_obj:
+                        # character hyper stat display function call, stat_increase is type(str)
+                        self.display_hyper_stat(obj.get('stat_type'), obj.get('stat_increase'))
+                else:
+                    search_log += '4: 캐릭터 하이퍼스탯 정보 조회 실패 GET(' + str(c_hyper_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character propensity request
+                url_str = self.make_c_url('propensity', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_prop_req = conn.getresponse()
+
+                if (c_prop_req.status == 200):
+                    c_prop_json = json.loads(c_prop_req.read().decode('utf-8'))
+                    prop_c_chm = str(c_prop_json.get('charm_level'))
+                    self.lb_pp_chm.setText('매력: ' + prop_c_chm + ' lv')
+                    prop_c_crm = str(c_prop_json.get('charisma_level'))
+                    self.lb_pp_crm.setText('카리스마: ' + prop_c_crm + ' lv')
+                    prop_c_hdc = str(c_prop_json.get('handicraft_level'))
+                    self.lb_pp_hdc.setText('손재주: ' + prop_c_hdc + ' lv')
+                    prop_c_ist = str(c_prop_json.get('insight_level'))
+                    self.lb_pp_ist.setText('통찰력: ' + prop_c_ist + ' lv')
+                    prop_c_ssb = str(c_prop_json.get('sensibility_level'))
+                    self.lb_pp_ssb.setText('감성: ' + prop_c_ssb + ' lv')
+                    prop_c_wln = str(c_prop_json.get('willingness_level'))
+                    self.lb_pp_wln.setText('의지: ' + prop_c_wln + ' lv')
+                else:
+                    search_log += '5: 캐릭터 성향 정보 조회 실패 GET(' + str(c_prop_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+            
+
+                # character ability request
+                url_str = self.make_c_url('ability', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_abil_req = conn.getresponse()
+
+                if (c_abil_req.status == 200):
+                    c_abil_json = json.loads(c_abil_req.read().decode('utf-8'))
+                    c_abil_obj = c_abil_json.get('ability_info')
+                    for obj in c_abil_obj:
+                        # character ability display function call, ability_no is type(str)
+                        self.display_ability(obj.get('ability_no'), obj.get('ability_grade'), obj.get('ability_value'))
+                else:
+                    search_log += '6: 캐릭터 어빌리티 정보 조회 실패 GET(' + str(c_abil_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # start: equip list
+                self.w_list_item.addItem('=======================================================================================================================')
+
+
+                # character equip item request - mechanic, evan equipments do not supoort
+                url_str = self.make_c_url('item-equipment', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_ieq_req = conn.getresponse()
+
+                if (c_ieq_req.status == 200):
+                    c_ieq_json = json.loads(c_ieq_req.read().decode('utf-8'))
+                    c_ieq_obj = c_ieq_json.get('item_equipment')
+                    for obj in c_ieq_obj:
+                        # character equip item display function call
+                        self.display_equip(obj)
+
+                    ieq_title = c_ieq_json.get('title')
+                    if (ieq_title is not None):
+                        ieq_title_txt = ieq_title.get('title_name')
+                        self.w_list_item.addItem('칭호: <' + ieq_title_txt + '>')
+                else:
+                    search_log += '7: 캐릭터 장착 장비 정보 조회 실패 GET(' + str(c_ieq_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # end: equip list
+                self.w_list_item.addItem('=======================================================================================================================')
+
+
+                # character equip symbol request
+                url_str = self.make_c_url('symbol-equipment', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_seq_req = conn.getresponse()
+
+                if (c_seq_req.status == 200):
+                    c_seq_json = json.loads(c_seq_req.read().decode('utf-8'))
+                    c_seq_obj = c_seq_json.get('symbol')
+                    for obj in c_seq_obj:
+                        # character equip symbol display function call
+                        self.display_symbol(obj.get('symbol_name'), obj.get('symbol_level'))
+                else:
+                    search_log += '8: 캐릭터 장착 심볼 정보 조회 실패 GET(' + str(c_seq_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+                # start: skill list
+                self.w_list_skill.addItem('=======================================================================================================================')
+
+
+                # character hyper passive skill request
+                url_str = self.make_c_url('skill', ocid_str, base_time_str)
+                url_str += '&character_skill_grade=hyperpassive'
+                conn.request("GET", url_str, headers=self.headers)
+                c_hpass_req = conn.getresponse()
+
+                if (c_hpass_req.status == 200):
+                    c_hpass_json = json.loads(c_hpass_req.read().decode('utf-8'))
+                    c_hpass_obj = c_hpass_json.get('character_skill')
+                    if (len(c_hpass_obj) != 0):
+                        self.w_list_skill.addItem('[하이퍼 패시브 스킬]')
+                        for obj in c_hpass_obj:
+                            # character skill display function call
+                            self.display_skill(obj)
+                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                else:
+                    search_log += '9: 캐릭터 하이퍼 패시브 스킬 정보 조회 실패 GET(' + str(c_hpass_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character 5-grade skill request
+                url_str = self.make_c_url('skill', ocid_str, base_time_str)
+                url_str += '&character_skill_grade=5'
+                conn.request("GET", url_str, headers=self.headers)
+                c_5skill_req = conn.getresponse()
+
+                if (c_5skill_req.status == 200):
+                    c_5skill_json = json.loads(c_5skill_req.read().decode('utf-8'))
+                    c_5skill_obj = c_5skill_json.get('character_skill')
+                    if (len(c_5skill_obj) != 0):
+                        self.w_list_skill.addItem('[5차 스킬]')
+                        for obj in c_5skill_obj:
+                            # character skill display function call
+                            self.display_skill(obj)
+                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                else:
+                    search_log += '10: 캐릭터 5차 스킬 정보 조회 실패 GET(' + str(c_5skill_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character 6-grade skill request
+                url_str = self.make_c_url('skill', ocid_str, base_time_str)
+                url_str += '&character_skill_grade=6'
+                conn.request("GET", url_str, headers=self.headers)
+                c_6skill_req = conn.getresponse()
+
+                if (c_6skill_req.status == 200):
+                    c_6skill_json = json.loads(c_6skill_req.read().decode('utf-8'))
+                    c_6skill_obj = c_6skill_json.get('character_skill')
+                    if (len(c_6skill_obj) != 0):
+                        self.w_list_skill.addItem('[6차 스킬]')
+                        for obj in c_6skill_obj:
+                            # character skill display function call
+                            self.display_skill(obj)
+                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                else:
+                    search_log += '11: 캐릭터 6차 스킬 정보 조회 실패 GET(' + str(c_6skill_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+            
+
+                # character 6-stat request
+                url_str = self.make_c_url('hexamatrix-stat', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_hexastat_req = conn.getresponse()
+                
+                if (c_hexastat_req.status == 200):
+                    c_hexastat_json = json.loads(c_hexastat_req.read().decode('utf-8'))
+                    c_hexastat_obj = c_hexastat_json.get('character_hexa_stat_core')
+                    if (len(c_hexastat_obj) != 0):
+                        self.w_list_skill.addItem('[헥사 스탯]')
+                        for obj in c_hexastat_obj:
+                            # character 6-stat display function call
+                            self.display_hexastat(obj)
+                else:
+                    search_log += '12: 캐릭터 헥사 스탯 정보 조회 실패 GET(' + str(c_hexastat_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+            
+
+                # end: skill list
+                self.w_list_skill.addItem('=======================================================================================================================')
+
+
+                # character dojang request
+                url_str = self.make_c_url('dojang', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                c_dojang_req = conn.getresponse()
+
+                if (c_dojang_req.status == 200):
+                    c_dojang_json = json.loads(c_dojang_req.read().decode('utf-8'))
+                    c_dojang_floor = c_dojang_json.get('dojang_best_floor')
+                    c_dojang_rtime = c_dojang_json.get('date_dojang_record')
+                    if (c_dojang_floor is not None and c_dojang_rtime is not None):
+                        c_dojang_rtime = c_dojang_rtime.split('T')[0]
+                        c_dojang_floor_str = '무릉: ' + str(c_dojang_floor) + '층 / ' + c_dojang_rtime + ' 갱신'
+                        self.lb_c_dojang.setText(c_dojang_floor_str)
+                    else:
+                        c_dojang_floor_str = '무릉: (기록없음)'
+                        self.lb_c_dojang.setText(c_dojang_floor_str)
+                else:
+                    search_log += '13: 캐릭터 무릉 정보 조회 실패 GET(' + str(c_dojang_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # start: union list
+                self.w_list_union.addItem('=======================================================================================================================')
+
+
+                # character union request
+                url_str = self.make_u_url('union', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                u_union_req = conn.getresponse()
+
+                if (u_union_req.status == 200):
+                    u_union_json = json.loads(u_union_req.read().decode('utf-8'))
+                    u_union_grade = u_union_json.get('union_grade')
+                    u_union_level = u_union_json.get('union_level')
+                    if (u_union_grade is not None and u_union_level is not None):
+                        self.w_list_union.addItem('[' + u_union_grade + ']: ' + str(u_union_level) + 'lv')
+                        self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                    else:
+                        self.w_list_union.addItem('유니온 정보 갱신 필요')
+                else:
+                    search_log += '14: 캐릭터 유니온 정보 조회 실패 GET(' + str(u_union_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # character union raider request
+                url_str = self.make_u_url('union-raider', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                u_raider_req = conn.getresponse()
+
+                if (u_raider_req.status == 200):
+                    u_raider_json = json.loads(u_raider_req.read().decode('utf-8'))
+
+                    u_occupied_list = u_raider_json.get('union_occupied_stat')
+                    if (len(u_occupied_list) != 0):
+                        self.w_list_union.addItem('[공격대 점령 효과]')
+                        for obj in u_occupied_list:
+                            self.w_list_union.addItem('    ' + obj)
+                        self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
+
+                    u_raider_list = u_raider_json.get('union_raider_stat')
+                    if (len(u_raider_list) != 0):
+                        self.w_list_union.addItem('[공격대원 효과]')
+                        for obj in u_raider_list:
+                            self.w_list_union.addItem('    ' + obj)
+                        
+                else:
+                    search_log += '15: 유니온 효과 조회 실패 GET(' + str(u_raider_req.status) + ')'
+                    self.txt_c_log.setPlainText(search_log)
+                    return
+
+
+                # end: union list
+                self.w_list_union.addItem('=======================================================================================================================')
+
+
+                search_end_time = time.time()
+                search_log += '검색 성공: ' + f'{search_end_time - search_start_time:.2f} sec'
                 self.txt_c_log.setPlainText(search_log)
-                return
 
+            else:
+                search_log += '0: API 키 또는 캐릭터 갱신/닉네임 입력 확인 - OCID 조회 실패 GET(' + str(ocid_req.status) + ')'
+                self.txt_c_log.setPlainText(search_log)
 
-            # end: union list
-            self.w_list_union.addItem('=======================================================================================================================')
+        except:
+            logging.error('==========================================================')
+            logging.error(traceback.format_exc())
+            logging.error('==========================================================')
 
-
-            search_end_time = time.time()
-            search_log += '검색 성공: ' + f'{search_end_time - search_start_time:.2f} sec'
-            self.txt_c_log.setPlainText(search_log)
-
-
-        else:
-            search_log += '0: API 키 또는 캐릭터 갱신/닉네임 입력 확인 - OCID 조회 실패 GET(' + str(ocid_req.status_code) + ')'
-            self.txt_c_log.setPlainText(search_log)
 
 
 ####################################################################################################################################################################
@@ -2244,4 +2277,6 @@ if __name__ == "__main__" :
         myWindow.show()
         app.exec_()
     except:
+        logging.error('==========================================================')
         logging.error(traceback.format_exc())
+        logging.error('==========================================================')

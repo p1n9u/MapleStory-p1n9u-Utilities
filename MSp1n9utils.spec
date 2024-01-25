@@ -1,11 +1,19 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+added_files=[
+    ('./resources/snd/*', './resources/snd'),
+    ('./resources/ui/*', './resources/ui'),
+    ('./resources/icon/*', './resources/icon'),
+    ('./resources/img/*', './resources/img'),
+    ('./log/*', './log'),
+    ('./nexon_api_key/*', './nexon_api_key')
+]
 
 a = Analysis(
     ['App.py'],
     pathex=[],
     binaries=[],
-    datas=[('resources/snd/', './resources/snd'), ('resources/ui/', './resources/ui'), ('resources/icon/', './resources/icon'), ('resources/img/', './resources/img')],
+    datas=added_files,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

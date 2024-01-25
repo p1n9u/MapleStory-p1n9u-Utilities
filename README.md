@@ -6,8 +6,8 @@ New Version Release : 2024-01-24
 
 ### Download
 
-- v3.0.2
-    - [Dropbox](https://www.dropbox.com/scl/fi/tvmwmhl09din4vlofugab/_240125.zip?rlkey=r0o45n7i65l6lgs2bz58s5el4&dl=0) : LTS Version
+- v3.0.3
+    - [Dropbox](https://www.dropbox.com/scl/fi/vx6bjk0lsvbd1o1tzz24s/_240125.zip?rlkey=7lc9eawinbkc8cxcyxw82i66i&dl=0) : LTS Version
         - MSp1n9utils.exe: 실행 파일
         - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
         - log: 프로그램 에러 로그 기록
@@ -18,7 +18,10 @@ New Version Release : 2024-01-24
 
 ### Version
 
-- v3.0.2-240125 : LTS, Testing..
+- v3.0.3-240125 : LTS, Testing..
+    - 캐릭터 검색 탭 오류 수정
+    - 캐릭터 검색 성능 향상 (라이브러리 및 코드 수정)
+- v3.0.2-240125
     - 폴프 타이머 오류 수정
     - 재획 타이머 ui 수정
 - v3.0.1-240125 
@@ -50,20 +53,36 @@ New Version Release : 2024-01-24
 
 ### Dev
 
-1. Python 3.12.0
+1. Python 3.11.6
 2. pyinstaller 6.3.0
-3. PyQt5 designer 5.14.1 (install by pip, exec command: $ designer)
+3. PyQt5 designer 5.14.1 (install by pip install pyqt5designer, exec command: $ designer)
 
 
 ### Build
 
-1. Build : pyinstaller --clean --onefile --noconsole --icon="resources/icon/favicon.ico" --add-data="resources/*;." -n MSp1n9utils App.py
 
-    - **Use Windows PowerShell**
+1. Build : pyinstaller --clean --onefile --noconsole --icon="./resources/icon/favicon.ico" --add-data="./resources/*;." -n MSp1n9utils App.py
+
+    - Use Windows PowerShell
         - [reference](https://flytrap.tistory.com/entry/pyinstaller-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EB%8A%94-%EB%B0%A9%EB%B2%95-230MB-36MB)
 
 2. modify RiceHarvester.spec file
 
-    datas=[('resources/snd/', './resources/snd'), ('resources/ui/', './resources/ui'), ('resources/icon/', './resources/icon'), ('resources/img/', './resources/img')],
+    ```
+    added_files=[
+        ('./resources/snd/*', './resources/snd'),
+        ('./resources/ui/*', './resources/ui'),
+        ('./resources/icon/*', './resources/icon'),
+        ('./resources/img/*', './resources/img'),
+        ('./log/*', './log'),
+        ('./nexon_api_key/*', './nexon_api_key')
+    ]
+
+    a = Analysis(
+        ...
+        datas=added_files,
+        ...
+    )
+    ```
 
 3. pyinstaller .\MSp1n9utils.spec
