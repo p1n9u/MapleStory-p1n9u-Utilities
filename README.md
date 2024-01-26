@@ -2,12 +2,12 @@
 
 ## MapleStory Wealth Acquisition Timer (p1n9u utilites)
 
-New Version Release : 2024-01-24
+New Version Release : 2024-01-26
 
 ### Download
 
-- v3.0.3
-    - [Dropbox](https://www.dropbox.com/scl/fi/vx6bjk0lsvbd1o1tzz24s/_240125.zip?rlkey=7lc9eawinbkc8cxcyxw82i66i&dl=0) : LTS Version
+- v3.1.0
+    - [Dropbox](https://www.dropbox.com/scl/fi/fh6esrkej4g5j6upx22gd/_240126.zip?rlkey=ha78w31izwrt273b2tbl992nb&dl=0) : LTS Version
         - MSp1n9utils.exe: 실행 파일
         - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
         - log: 프로그램 에러 로그 기록
@@ -18,7 +18,12 @@ New Version Release : 2024-01-24
 
 ### Version
 
-- v3.0.3-240125 : LTS, Testing..
+- v3.1.0-240126 : LTS, Testing..
+    - 캐릭터 검색 탭 UI 변경
+    - 캐릭터 검색 탭 검색 로그 로직 변경
+    - 캐릭터 검색 탭 아티팩트 검색 기능 추가
+    - API request close 누락 패치 
+- v3.0.3-240125
     - 캐릭터 검색 탭 오류 수정
     - 캐릭터 검색 성능 향상 (라이브러리 및 코드 수정)
 - v3.0.2-240125

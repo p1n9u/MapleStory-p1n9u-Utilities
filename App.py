@@ -1563,7 +1563,7 @@ class WindowClass(QMainWindow, form_class):
             if (etc_cnt):
                 self.w_list_item.addItem(equip_txt5)
 
-        self.w_list_item.addItem('-----------------------------------------------------------------------------------------------------------------------')
+        self.w_list_item.addItem('--------------------------------------------------------------------------------------------------------------------------')
 
 
     # character equip symbol display function
@@ -1646,15 +1646,16 @@ class WindowClass(QMainWindow, form_class):
 
 
     def reset_search_tap(self):
-        self.txt_c_log.clear()
+        self.tab_search_sub.setCurrentIndex(0)
         self.txt_c_name.clear()
         self.w_list_item.clear()
         self.w_list_skill.clear()
         self.w_list_union.clear()
+        self.w_list_artifact.clear()
 
 
         self.te_is_real_you.clear()
-        self.lb_c_atkpow.setText('전투력측정중')
+        self.lb_c_atkpow.setText('전투력')
         self.pb_exp.setValue(0)
         self.lb_c_exp.clear()
         self.lb_c_server_img.clear()
@@ -1778,18 +1779,13 @@ class WindowClass(QMainWindow, form_class):
         search_server_str = search_json.get('world_name')
         if (search_server_str is None):
             search_server_str = '?'
-        self.te_is_real_you.appendPlainText('=======================================================================================================================')
-        self.te_is_real_you.appendPlainText(' ')
-        self.te_is_real_you.appendPlainText('                                                   검색중: 모든 정보 로딩까지 약 0~2초 정도 소요됩니다.')
-        self.te_is_real_you.appendPlainText(' ')
-        self.te_is_real_you.appendPlainText('=======================================================================================================================')
-        self.te_is_real_you.appendPlainText('                             [ Ctrl + a (전체선택) -> Ctrl + c (복사) -> Ctrl + v (붙여넣기) ] : 본/부캐 창만 가능 합니다.')
-        self.te_is_real_you.appendPlainText('-----------------------------------------------------------------------------------------------------------------------')
+        
+        self.te_is_real_you.appendPlainText('==========================================================================================================================')
         self.te_is_real_you.appendPlainText('[검색 결과]')
         self.te_is_real_you.appendPlainText('    검색 캐릭터 명: ' + search_name)
         self.te_is_real_you.appendPlainText('    검색 캐릭터 ocid: ' + search_ocid)
         self.te_is_real_you.appendPlainText('    검색 캐릭터 서버: ' + search_server_str)
-        self.te_is_real_you.appendPlainText('-----------------------------------------------------------------------------------------------------------------------')
+        self.te_is_real_you.appendPlainText('--------------------------------------------------------------------------------------------------------------------------')
 
 
         # ranking union
@@ -1808,13 +1804,9 @@ class WindowClass(QMainWindow, form_class):
             else:
                 self.te_is_real_you.appendPlainText("    갱신필요")
         else:
-            search_log += 'sub 0: 유니온 랭킹 정보 조회 실패 GET(' + str(union_base_req.status) + ')'
-            self.te_is_real_you.appendPlainText(search_log)
-            return
+            self.te_search_log.appendPlainText('[02/19]: 유니온 랭킹 정보 조회 실패 GET(' + str(union_base_req.status) + ')')
 
-
-        self.te_is_real_you.appendPlainText('-----------------------------------------------------------------------------------------------------------------------')
-
+        self.te_is_real_you.appendPlainText('--------------------------------------------------------------------------------------------------------------------------')
 
         # ranking achievement
         url_string = "/maplestory/v1/ranking/achievement?date=" + base_time + "&ocid=" + search_ocid
@@ -1832,12 +1824,9 @@ class WindowClass(QMainWindow, form_class):
             else:
                 self.te_is_real_you.appendPlainText("    갱신필요")
         else:
-            search_log += 'sub 1: 업적 랭킹 정보 조회 실패 GET(' + str(achive_base_req.status) + ')'
-            self.te_is_real_you.appendPlainText(search_log)
-            return
+            self.te_search_log.appendPlainText('[03/19]: 업적 랭킹 정보 조회 실패 GET(' + str(achive_base_req.status) + ')')
 
-
-        self.te_is_real_you.appendPlainText('=======================================================================================================================')
+        self.te_is_real_you.appendPlainText('==========================================================================================================================')
 
 
     # search function
@@ -1847,18 +1836,29 @@ class WindowClass(QMainWindow, form_class):
         c_name = self.txt_c_name.text()
         base_time = QDateTime.currentDateTime().addDays(-1)
         base_time_str = base_time.toString('yyyy-MM-dd')
-        search_log = ''
-
 
         # reset previous data
         self.reset_search_tap()
 
         try:
+            self.lb_c_atkpow.setText('전투력측정중')
+            self.te_search_log.clear()
+            self.te_search_log.appendPlainText('    ㄴ 검색 완료 후 탭을 이동하여 정보 확인 가능')
+            self.te_search_log.appendPlainText('==========================================================================================================================')
+            self.te_search_log.appendPlainText(' ')
+            self.te_search_log.appendPlainText('                                                   검색중: 모든 정보 로딩까지 약 0~2초 정도 소요됩니다.')
+            self.te_search_log.appendPlainText(' ')
+            self.te_search_log.appendPlainText('==========================================================================================================================')
+            self.te_search_log.appendPlainText('                             [ Ctrl + a (전체선택) -> Ctrl + c (복사) -> Ctrl + v (붙여넣기) ] : 본/부캐 창만 가능 합니다.')
+            self.te_search_log.appendPlainText('--------------------------------------------------------------------------------------------------------------------------')
+
+            # open connection
             conn = http.client.HTTPSConnection("open.api.nexon.com")
             
             c_name_encoded = parse.quote(str(c_name))
             # character ocid request
             url_str = "/maplestory/v1/id?character_name=" + c_name_encoded
+            
             conn.request("GET", url_str, headers=self.headers)
             ocid_req = conn.getresponse()
 
@@ -1883,6 +1883,7 @@ class WindowClass(QMainWindow, form_class):
 
                     # search main/sub charactor function call
                     self.is_real_you(conn, basic_c_name, ocid_str, c_basic_json, base_time_str)
+
 
                     basic_c_server_str = c_basic_json.get('world_name')
                     if (basic_c_server_str is not None):
@@ -1928,11 +1929,10 @@ class WindowClass(QMainWindow, form_class):
                         c_img_pixmap = QPixmap.fromImage(c_img_qt)
                         self.lb_c_img.setPixmap(c_img_pixmap)
                     else:
+                        self.te_search_log.appendPlainText('[04/19]: 캐릭터 이미지 정보 조회 실패 GET(' + str(c_img_req.status) + ')')
                         self.lb_c_img.setText(str(c_img_req.status))
                 else:
-                    search_log += '1: 캐릭터 기본 정보 조회 실패 GET(' + str(c_basic_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[01/19]: 캐릭터 기본 정보 조회 실패 GET(' + str(c_basic_req.status) + ')')
 
 
                 # character popularity request
@@ -1946,9 +1946,7 @@ class WindowClass(QMainWindow, form_class):
                     pop_c_pop_str = '인기도: ' + str(c_pop_json.get('popularity'))
                     self.lb_c_pop.setText(pop_c_pop_str)
                 else:
-                    search_log += '2: 캐릭터 인기도 정보 조회 실패 GET(' + str(c_pop_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[05/19]: 캐릭터 인기도 정보 조회 실패 GET(' + str(c_pop_req.status) + ')')
 
 
                 # character stat request
@@ -1963,9 +1961,7 @@ class WindowClass(QMainWindow, form_class):
                         # character stat display function call, stat_value is type(str)
                         self.display_stat(obj.get('stat_name'), obj.get('stat_value'))
                 else:
-                    search_log += '3: 캐릭터 종합 능력치 정보 조회 실패 GET(' + str(c_stat_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[06/19]: 캐릭터 종합 능력치 정보 조회 실패 GET(' + str(c_stat_req.status) + ')')
 
 
                 # character hyper stat request
@@ -1992,9 +1988,7 @@ class WindowClass(QMainWindow, form_class):
                         # character hyper stat display function call, stat_increase is type(str)
                         self.display_hyper_stat(obj.get('stat_type'), obj.get('stat_increase'))
                 else:
-                    search_log += '4: 캐릭터 하이퍼스탯 정보 조회 실패 GET(' + str(c_hyper_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[07/19]: 캐릭터 하이퍼스탯 정보 조회 실패 GET(' + str(c_hyper_req.status) + ')')
 
 
                 # character propensity request
@@ -2017,10 +2011,8 @@ class WindowClass(QMainWindow, form_class):
                     prop_c_wln = str(c_prop_json.get('willingness_level'))
                     self.lb_pp_wln.setText('의지: ' + prop_c_wln + ' lv')
                 else:
-                    search_log += '5: 캐릭터 성향 정보 조회 실패 GET(' + str(c_prop_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
-            
+                    self.te_search_log.appendPlainText('[08/19]: 캐릭터 성향 정보 조회 실패 GET(' + str(c_prop_req.status) + ')')
+
 
                 # character ability request
                 url_str = self.make_c_url('ability', ocid_str, base_time_str)
@@ -2034,13 +2026,11 @@ class WindowClass(QMainWindow, form_class):
                         # character ability display function call, ability_no is type(str)
                         self.display_ability(obj.get('ability_no'), obj.get('ability_grade'), obj.get('ability_value'))
                 else:
-                    search_log += '6: 캐릭터 어빌리티 정보 조회 실패 GET(' + str(c_abil_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[09/19]: 캐릭터 어빌리티 정보 조회 실패 GET(' + str(c_abil_req.status) + ')')
 
 
                 # start: equip list
-                self.w_list_item.addItem('=======================================================================================================================')
+                self.w_list_item.addItem('==========================================================================================================================')
 
 
                 # character equip item request - mechanic, evan equipments do not supoort
@@ -2060,13 +2050,11 @@ class WindowClass(QMainWindow, form_class):
                         ieq_title_txt = ieq_title.get('title_name')
                         self.w_list_item.addItem('칭호: <' + ieq_title_txt + '>')
                 else:
-                    search_log += '7: 캐릭터 장착 장비 정보 조회 실패 GET(' + str(c_ieq_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[10/19]: 캐릭터 장착 장비 정보 조회 실패 GET(' + str(c_ieq_req.status) + ')')
 
 
                 # end: equip list
-                self.w_list_item.addItem('=======================================================================================================================')
+                self.w_list_item.addItem('==========================================================================================================================')
 
 
                 # character equip symbol request
@@ -2081,12 +2069,11 @@ class WindowClass(QMainWindow, form_class):
                         # character equip symbol display function call
                         self.display_symbol(obj.get('symbol_name'), obj.get('symbol_level'))
                 else:
-                    search_log += '8: 캐릭터 장착 심볼 정보 조회 실패 GET(' + str(c_seq_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[11/19]: 캐릭터 장착 심볼 정보 조회 실패 GET(' + str(c_seq_req.status) + ')')
+
 
                 # start: skill list
-                self.w_list_skill.addItem('=======================================================================================================================')
+                self.w_list_skill.addItem('==========================================================================================================================')
 
 
                 # character hyper passive skill request
@@ -2103,11 +2090,9 @@ class WindowClass(QMainWindow, form_class):
                         for obj in c_hpass_obj:
                             # character skill display function call
                             self.display_skill(obj)
-                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                        self.w_list_skill.addItem('--------------------------------------------------------------------------------------------------------------------------')
                 else:
-                    search_log += '9: 캐릭터 하이퍼 패시브 스킬 정보 조회 실패 GET(' + str(c_hpass_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[12/19]: 캐릭터 하이퍼 패시브 스킬 정보 조회 실패 GET(' + str(c_hpass_req.status) + ')')
 
 
                 # character 5-grade skill request
@@ -2124,11 +2109,9 @@ class WindowClass(QMainWindow, form_class):
                         for obj in c_5skill_obj:
                             # character skill display function call
                             self.display_skill(obj)
-                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                        self.w_list_skill.addItem('--------------------------------------------------------------------------------------------------------------------------')
                 else:
-                    search_log += '10: 캐릭터 5차 스킬 정보 조회 실패 GET(' + str(c_5skill_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[13/19]: 캐릭터 5차 스킬 정보 조회 실패 GET(' + str(c_5skill_req.status) + ')')
 
 
                 # character 6-grade skill request
@@ -2145,11 +2128,9 @@ class WindowClass(QMainWindow, form_class):
                         for obj in c_6skill_obj:
                             # character skill display function call
                             self.display_skill(obj)
-                        self.w_list_skill.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                        self.w_list_skill.addItem('--------------------------------------------------------------------------------------------------------------------------')
                 else:
-                    search_log += '11: 캐릭터 6차 스킬 정보 조회 실패 GET(' + str(c_6skill_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[14/19]: 캐릭터 6차 스킬 정보 조회 실패 GET(' + str(c_6skill_req.status) + ')')
             
 
                 # character 6-stat request
@@ -2166,13 +2147,11 @@ class WindowClass(QMainWindow, form_class):
                             # character 6-stat display function call
                             self.display_hexastat(obj)
                 else:
-                    search_log += '12: 캐릭터 헥사 스탯 정보 조회 실패 GET(' + str(c_hexastat_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[15/19]: 캐릭터 헥사 스탯 정보 조회 실패 GET(' + str(c_hexastat_req.status) + ')')
             
 
                 # end: skill list
-                self.w_list_skill.addItem('=======================================================================================================================')
+                self.w_list_skill.addItem('==========================================================================================================================')
 
 
                 # character dojang request
@@ -2192,13 +2171,11 @@ class WindowClass(QMainWindow, form_class):
                         c_dojang_floor_str = '무릉: (기록없음)'
                         self.lb_c_dojang.setText(c_dojang_floor_str)
                 else:
-                    search_log += '13: 캐릭터 무릉 정보 조회 실패 GET(' + str(c_dojang_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[16/19]: 캐릭터 무릉 정보 조회 실패 GET(' + str(c_dojang_req.status) + ')')
 
 
                 # start: union list
-                self.w_list_union.addItem('=======================================================================================================================')
+                self.w_list_union.addItem('==========================================================================================================================')
 
 
                 # character union request
@@ -2212,13 +2189,11 @@ class WindowClass(QMainWindow, form_class):
                     u_union_level = u_union_json.get('union_level')
                     if (u_union_grade is not None and u_union_level is not None):
                         self.w_list_union.addItem('[' + u_union_grade + ']: ' + str(u_union_level) + 'lv')
-                        self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                        self.w_list_union.addItem('--------------------------------------------------------------------------------------------------------------------------')
                     else:
                         self.w_list_union.addItem('유니온 정보 갱신 필요')
                 else:
-                    search_log += '14: 캐릭터 유니온 정보 조회 실패 GET(' + str(u_union_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[17/19]: 캐릭터 유니온 정보 조회 실패 GET(' + str(u_union_req.status) + ')')
 
 
                 # character union raider request
@@ -2234,7 +2209,7 @@ class WindowClass(QMainWindow, form_class):
                         self.w_list_union.addItem('[공격대 점령 효과]')
                         for obj in u_occupied_list:
                             self.w_list_union.addItem('    ' + obj)
-                        self.w_list_union.addItem('-----------------------------------------------------------------------------------------------------------------------')
+                        self.w_list_union.addItem('--------------------------------------------------------------------------------------------------------------------------')
 
                     u_raider_list = u_raider_json.get('union_raider_stat')
                     if (len(u_raider_list) != 0):
@@ -2243,27 +2218,75 @@ class WindowClass(QMainWindow, form_class):
                             self.w_list_union.addItem('    ' + obj)
                         
                 else:
-                    search_log += '15: 유니온 효과 조회 실패 GET(' + str(u_raider_req.status) + ')'
-                    self.txt_c_log.setPlainText(search_log)
-                    return
+                    self.te_search_log.appendPlainText('[18/19]: 유니온 효과 조회 실패 GET(' + str(u_raider_req.status) + ')')
 
 
                 # end: union list
-                self.w_list_union.addItem('=======================================================================================================================')
+                self.w_list_union.addItem('==========================================================================================================================')
+
+
+                # start: union list
+                self.w_list_artifact.addItem('==========================================================================================================================')
+
+
+                # character union artifact
+                url_str = self.make_u_url('union-artifact', ocid_str, base_time_str)
+                conn.request("GET", url_str, headers=self.headers)
+                u_artifact_req = conn.getresponse()
+
+                if (u_artifact_req.status == 200):
+                    u_aritifact_json = json.loads(u_artifact_req.read().decode('utf-8'))
+
+                    u_arti_effect_list = u_aritifact_json.get('union_artifact_effect')
+                    if (len(u_arti_effect_list) != 0):
+                        self.w_list_artifact.addItem('[아티팩트 효과]')
+                        for obj in u_arti_effect_list:
+                            arti_effect_str = '  <' + str(obj.get('level')) + 'lv> ' + obj.get('name')
+                            self.w_list_artifact.addItem(arti_effect_str)
+
+                    self.w_list_artifact.addItem('--------------------------------------------------------------------------------------------------------------------------')
+
+                    u_arti_crystal_list = u_aritifact_json.get('union_artifact_crystal')
+                    if (len(u_arti_crystal_list) != 0):
+                        self.w_list_artifact.addItem('[보유 아티팩트]')
+                        for obj in u_arti_crystal_list:
+                            arti_crystal_str = '  <' + str(obj.get('level')) + 'lv> ' + obj.get('name')
+                            arti_option1_str = '    ㄴ ' + obj.get('crystal_option_name_1')
+                            arti_option2_str = '    ㄴ ' + obj.get('crystal_option_name_2')
+                            arti_option3_str = '    ㄴ ' + obj.get('crystal_option_name_3')
+                            self.w_list_artifact.addItem(arti_crystal_str)
+                            self.w_list_artifact.addItem(arti_option1_str)
+                            self.w_list_artifact.addItem(arti_option2_str)
+                            self.w_list_artifact.addItem(arti_option3_str)
+                else:
+                    self.te_search_log.appendPlainText('[19/19]: 유니온 아티팩트 조회 실패 GET(' + str(u_artifact_req.status) + ')')
+
+
+                # end: union list
+                self.w_list_artifact.addItem('==========================================================================================================================')
+
+
 
 
                 search_end_time = time.time()
-                search_log += '검색 성공: ' + f'{search_end_time - search_start_time:.2f} sec'
-                self.txt_c_log.setPlainText(search_log)
+                self.te_search_log.appendPlainText('##############################    검색 성공: ' + f'{search_end_time - search_start_time:.2f} sec    ##############################')
 
+                conn.close()
             else:
-                search_log += '0: API 키 또는 캐릭터 갱신/닉네임 입력 확인 - OCID 조회 실패 GET(' + str(ocid_req.status) + ')'
-                self.txt_c_log.setPlainText(search_log)
+                conn.close()
+                self.lb_c_atkpow.setText('전투력측정실패')
+                self.te_search_log.appendPlainText('[00/19]: API 키 확인 / 캐릭터 갱신 필요 / 캐릭터 닉네임 입력 확인(대소문자구분) - OCID 조회 실패 GET(' + str(ocid_req.status) + ')')
+            
+            self.te_search_log.appendPlainText('==========================================================================================================================')
 
+        # Fail Connection
         except:
             logging.error('==========================================================')
             logging.error(traceback.format_exc())
             logging.error('==========================================================')
+        finally:
+            if conn:
+                conn.close()
 
 
 

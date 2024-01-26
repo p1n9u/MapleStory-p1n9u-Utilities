@@ -3934,6 +3934,9 @@ color: rgb(0, 0, 0);</string>
        <property name="text">
         <string/>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
       <widget class="QProgressBar" name="pb_exp">
        <property name="geometry">
@@ -5844,33 +5847,6 @@ color: rgb(255, 255, 255);</string>
        <string>검색</string>
       </property>
      </widget>
-     <widget class="QPlainTextEdit" name="txt_c_log">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>0</y>
-        <width>681</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>메이플스토리</family>
-        <pointsize>12</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <property name="placeholderText">
-       <string>로그 출력 창(닉네임 대소문자 구분 유의)</string>
-      </property>
-     </widget>
      <widget class="QFrame" name="frame_stat_main2">
       <property name="geometry">
        <rect>
@@ -6702,10 +6678,10 @@ background-color: rgb(191, 191, 191);</string>
      <widget class="QTabWidget" name="tab_search_sub">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>60</y>
-        <width>761</width>
-        <height>711</height>
+        <x>830</x>
+        <y>30</y>
+        <width>771</width>
+        <height>741</height>
        </rect>
       </property>
       <property name="font">
@@ -6716,8 +6692,34 @@ background-color: rgb(191, 191, 191);</string>
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
+      <widget class="QWidget" name="tab_search_log">
+       <attribute name="title">
+        <string>검색로그</string>
+       </attribute>
+       <widget class="QPlainTextEdit" name="te_search_log">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>761</width>
+          <height>711</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>메이플스토리</family>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="tab_is_real_yo">
        <attribute name="title">
         <string>본/부캐 여부</string>
@@ -6727,8 +6729,8 @@ background-color: rgb(191, 191, 191);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>751</width>
-          <height>681</height>
+          <width>761</width>
+          <height>711</height>
          </rect>
         </property>
         <property name="font">
@@ -6753,8 +6755,8 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>751</width>
-          <height>681</height>
+          <width>761</width>
+          <height>711</height>
          </rect>
         </property>
         <property name="font">
@@ -6780,8 +6782,8 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>751</width>
-          <height>681</height>
+          <width>761</width>
+          <height>711</height>
          </rect>
         </property>
         <property name="font">
@@ -6807,8 +6809,35 @@ background-color: rgb(0, 0, 0);</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>751</width>
-          <height>681</height>
+          <width>761</width>
+          <height>711</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>메이플스토리</family>
+         </font>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_aritifact">
+       <attribute name="title">
+        <string>아티팩트</string>
+       </attribute>
+       <widget class="QListWidget" name="w_list_artifact">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>761</width>
+          <height>711</height>
          </rect>
         </property>
         <property name="font">
@@ -7391,7 +7420,7 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLineEdit" name="txt_api_key">
       <property name="geometry">
        <rect>
-        <x>840</x>
+        <x>150</x>
         <y>0</y>
         <width>611</width>
         <height>31</height>
@@ -7406,7 +7435,7 @@ color: rgb(255, 255, 255);</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true">background-color: rgb(212, 212, 212);</string>
       </property>
       <property name="text">
        <string/>
@@ -7418,7 +7447,7 @@ color: rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="btn_api_key_input">
       <property name="geometry">
        <rect>
-        <x>1450</x>
+        <x>760</x>
         <y>0</y>
         <width>71</width>
         <height>31</height>
@@ -7444,8 +7473,8 @@ color: rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>840</x>
-        <y>30</y>
-        <width>751</width>
+        <y>0</y>
+        <width>681</width>
         <height>31</height>
        </rect>
       </property>
@@ -7515,7 +7544,6 @@ color: rgb(0, 0, 255);</string>
      <zorder>lb_ab_snd</zorder>
      <zorder>lb_ab_trd</zorder>
      <zorder>tab_search_sub</zorder>
-     <zorder>txt_c_log</zorder>
      <zorder>frame_symbol</zorder>
      <zorder>txt_c_name</zorder>
      <zorder>btn_api_key_input</zorder>
