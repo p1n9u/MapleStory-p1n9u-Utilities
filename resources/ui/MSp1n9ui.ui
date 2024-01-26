@@ -30,7 +30,7 @@
    <string notr="true">background-color: rgb(135, 135, 135);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="tab_main">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -69,7 +69,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -6692,7 +6692,7 @@ background-color: rgb(191, 191, 191);</string>
        </font>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_search_log">
        <attribute name="title">
@@ -10161,7 +10161,7 @@ color: rgb(0, 255, 0);</string>
    <zorder>cb_prog_on_top</zorder>
    <zorder>lb_livetime</zorder>
    <zorder>cb_prog_tab_hide</zorder>
-   <zorder>tabWidget</zorder>
+   <zorder>tab_main</zorder>
    <zorder>cb_prog_mini</zorder>
   </widget>
  </widget>

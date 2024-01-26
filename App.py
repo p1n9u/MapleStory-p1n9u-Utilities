@@ -68,6 +68,7 @@ class WindowClass(QMainWindow, form_class):
         self.cb_prog_tab_hide.stateChanged.connect(self.ui_checbox_changed)
         self.cb_prog_mini.stateChanged.connect(self.ui_checbox_changed)
         self.cb_prog_on_top.stateChanged.connect(self.ui_checbox_changed)
+        self.tab_main.setCurrentIndex(0)
 
         self.wa_wav_list = [
             "p",

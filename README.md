@@ -6,8 +6,8 @@ New Version Release : 2024-01-26
 
 ### Download
 
-- v3.1.0
-    - [Dropbox](https://www.dropbox.com/scl/fi/fh6esrkej4g5j6upx22gd/_240126.zip?rlkey=ha78w31izwrt273b2tbl992nb&dl=0) : LTS Version
+- v3.1.1
+    - [Dropbox](https://www.dropbox.com/scl/fi/99ue6bm2jw7bxz0dyni7p/_240126.zip?rlkey=apcw386sdtklmx0x4hxj4bpbg&dl=0) : LTS Version
         - MSp1n9utils.exe: 실행 파일
         - MaplestoryFont_TTF: 메이플스토리 폰트, 설치 권장
         - log: 프로그램 에러 로그 기록
@@ -18,7 +18,9 @@ New Version Release : 2024-01-26
 
 ### Version
 
-- v3.1.0-240126 : LTS, Testing..
+- v3.1.1-240126 : LTS, Testing..
+    - 메인 탭 시작 화면 고정
+- v3.1.0-240126
     - 캐릭터 검색 탭 UI 변경
     - 캐릭터 검색 탭 검색 로그 로직 변경
     - 캐릭터 검색 탭 아티팩트 검색 기능 추가
