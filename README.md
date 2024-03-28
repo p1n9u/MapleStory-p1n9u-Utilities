@@ -14,7 +14,7 @@ New Version Release : 2024-01-26
         - nexon_api_key: 사용자의 넥슨 오픈 API 키 저장
         - 매뉴얼
         - 패치노트
-    - [Blog](https://p1n9u.com) Not LTS Version in Blog
+    - [Blog](https://p1n9u.com)
 
 ### Version
 
@@ -56,6 +56,20 @@ New Version Release : 2024-01-26
 
 
 ### Interface
+
+- 메인 화면 <br>
+![main](./prog_img/main.png)
+- 시계 전용(전체 최소화) <br>
+![min](./prog_img/minimize.png)
+- 재획 화면(설명서 최소화) <br>
+![wealth](./prog_img/wealth.png)
+- 캐릭터 검색(1일 전) <br>
+![character](./prog_img/character.png)
+- 웹 와드 <br>
+![web](./prog_img/web.png)
+- Copyrights
+![copy](./prog_img/copyrights.png) 
+
 
 
 ### Dev
